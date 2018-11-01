@@ -1,0 +1,272 @@
+html, body{
+    width:100%;
+    height:100%;
+    padding: 0;
+    margin:0;
+}
+
+.side-menu{
+    margin:0;
+    padding:0;
+    width: 100%;
+    height: 100%;
+    background: #434747;
+    border-right: #cf000f 4px solid;
+}
+
+.side-menu i{
+    margin-right: 10px;
+}
+
+.side-menu ul{
+    margin:0;
+    padding:0;
+    width: 100%;
+    height: 90%;
+    display: block;
+}
+
+.side-menu ul li{
+    display: flex;
+    justify-content: space-between;
+    margin:0;
+    padding:0;
+    width: 100%;
+    height: 60px;
+    background: #434747;
+    border-bottom: #cf000e8c solid 1px;   
+    transition: .3s;
+}
+
+.side-menu ul li:hover{
+    background: #cf000f;
+    transition: .3s;
+}
+
+.side-menu ul li a{
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+    display: flex;
+    justify-content: left;
+    align-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.navbar-principal{
+    display: flex;
+    justify-content: space-between;
+    background: #cf000f;
+    height: 80px;
+    font-weight: bold;
+}
+
+#logo-navbar{
+    flex-grow: 1;
+    max-width: 200px;
+}
+
+#pesquisar-navbar{
+    flex-grow: 2;
+    margin-right: 60px;
+}
+
+#user-navbar{
+    max-width: 200px;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: .5fr 2fr;
+    grid-template-rows: 1fr;
+    justify-content: center;
+    align-content: center;
+    color: white;
+}
+
+#user-navbar a{
+    max-width: 130px;
+    margin-left:10px;
+}
+
+#user-icone{
+    align-self: center;
+    font-size: 30pt;
+}
+
+#navbar-categorias{
+    padding: 0;
+}
+
+#categorias-navbar{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    width: 100%;
+}
+
+#categorias-navbar div{
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 5px;
+    font-weight: bold;
+    background: #97291db0;
+    color:white;
+}
+
+#categorias-navbar li{
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin:0;
+    transition: .5s;
+}
+
+#categorias-navbar li:hover{
+    background: #cf000f;
+    transition: .5s;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.13);
+}
+
+#categorias-navbar li a{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    margin:0;
+    color:black;
+    text-decoration: none;  
+    color: #cf000f;
+    font-weight: bold;
+    transition: .5s;
+}
+
+#categorias-navbar li:hover a{
+    color: white;
+    transition: .5s;   
+}
+
+.wrapper{
+    background: whitesmoke;
+    margin: 0;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 2fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.wrapper-admin{
+    background: gray;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: calc(100% - 90px);
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 1fr;
+    
+}
+
+.corpo-admin{
+    margin: 0;
+    padding: 10px;
+    background: whitesmoke;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+
+.footer-admin{
+    margin: 0;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background: #cf000f;
+    color:white;
+}
+
+.navbar-footer{
+    padding: 0;
+    height: 50px;
+}
+
+.navbar-footer ul{
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background: #cf000f;
+}
+
+.navbar-footer ul li{
+    list-style: none;
+    margin: 0;
+    align-self: center;
+}
+
+.navbar-footer ul li a{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12pt;
+    color: white;
+}
+
+.navbar-footer ul li:hover a{
+    color: #dddedf;
+}
+
+.navbar-footer p{
+    width: 100%;
+    text-align: center;
+}
+
+#nome-footer{
+    height: 40px;
+    display: flex;
+    padding-top: 10px;
+}
+
+.ir-loja{
+    height: 100%;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-top: 8px;
+    color: white;
+}
+
+.ir-loja a{
+    text-decoration: none;
+    color:white;
+}
+
+.ir-loja i{
+    margin-right: 5px;
+}
+
+#user-image{
+    max-width: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
