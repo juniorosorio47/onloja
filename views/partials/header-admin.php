@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="partials\css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="partials\css\layout.css">
+    <link rel="stylesheet" href="views\partials\css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="views\partials\css\layout.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <title>OnLoja - Administrador</title>
 </head>
@@ -33,7 +33,7 @@
     <div class="side-menu">
         <ul> 
             <!--Leva à pagina das informações do adm-->
-            <li style="font-weight: bold; background: #2e3131"><a href="#"><img id="user-image" src="../imagens/Sem título-1.jpg" alt="#"> Fulaninho da Silva</a></li>
+            <li style="font-weight: bold; background: #2e3131"><a href="#"><img id="user-image" src="views/partials/imagens/Sem título-1.jpg" alt="#"> Fulaninho da Silva</a></li>
             <!--Dashboard-->
             <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
             <!--Listagem de produtos e editar produtos-->
