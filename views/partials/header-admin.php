@@ -35,15 +35,15 @@
             <!--Leva à pagina das informações do adm-->
             <li style="font-weight: bold; background: #2e3131"><a href="#"><img id="user-image" src="views/partials/imagens/Sem título-1.jpg" alt="#"> Fulaninho da Silva</a></li>
             <!--Dashboard-->
-            <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+            <li id="home-admin"><a href="#"><i class="fa fa-home"></i>Home</a></li>
             <!--Listagem de produtos e editar produtos-->
-            <li><a href="#"><i class="fa fa-box"></i> Produtos</a></li>
+            <li id="produtos-admin"><a href="#"><i class="fa fa-box"></i> Produtos</a></li>
             <!--Categorias dos produtos-->
-            <li><a href="#"><i class="fa fa-list"></i> Categorias</a></li>
+            <li id="categorias-admin"><a href="#"><i class="fa fa-list"></i> Categorias</a></li>
             <!--Relatórios das vendas-->
-            <li><a href="#"><i class="fa fa-shopping-cart"></i> Vendas</a></li>
+            <li id="vendas-admin"><a href="#"><i class="fa fa-shopping-cart"></i> Vendas</a></li>
             <!--Listagem dos usuários-->
-            <li><a href="#"><i class="fa fa-user"></i> Usuários</a></li>
+            <li id="usuarios-admin"><a href=""><i class="fa fa-user"></i> Usuários</a></li>
         </ul>
     </div>
     <!--Conteúdo do site-->
