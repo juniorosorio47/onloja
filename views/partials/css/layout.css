@@ -177,8 +177,10 @@ html, body{
     display: grid;
     grid-template-columns: 250px 1fr;
     grid-template-rows: 1fr;
-   
+}
 
+.cartao-corpo{
+    padding: 0;
 }
 
 .corpo-admin{
@@ -189,7 +191,6 @@ html, body{
     height: 100%;
     overflow: auto;
 }
-
 
 .footer-admin{
     margin: 0;
@@ -270,5 +271,57 @@ html, body{
     max-width: 40px;
     border-radius: 50%;
     margin-right: 15px;
+}
+
+#acoes{
+    padding-right:0;
+    padding-left:0;
+}
+#acoes a{
+   margin-right:5px;
+}
+
+.input-forms{
+    width:70%;
+}
+#overlay.active{
+    background: rgba(0, 0, 0, 0.7);
+    width:100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    pointer-events:auto;
+    transition: 1s;
+    opacity:1;
+}
+.overlay{
+    pointer-events:none;
+    transition: 1s;
+    opacity:0;
+}
+.mod.active{
+    position: absolute;
+    top: 80px;
+    left: 300px;
+    right:300px;
+    pointer-events:auto;
+    transition: 1s;
+    opacity: 1;
+    transform: translateY(0);
+}
+.mod{
+    position: absolute;
+    opacity: 0;
+    transition: 1s;
+    pointer-events:none;
+    transform: translateY(-400%);
+}
+.modal-footer{
+    display:inline;
+    height: 50px;
+    padding: 5px;
 }
 
