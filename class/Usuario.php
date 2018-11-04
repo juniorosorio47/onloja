@@ -1,5 +1,5 @@
 <?php
-
+require_once('Endereco.php');
 class Usuario{
 
     private $id;
@@ -7,7 +7,7 @@ class Usuario{
     private $nome;
     private $cpf;
     private $dataNascimento;
-    public $contato;//Usar a função setContato($email, $telefone, $contato);
+    private $contato;//Usar a função setContato($email, $telefone, $contato);
     private $login;//Login ou email
     private $senha;//No mínimo 8 caracteres com letra e número
     private $endereco;//Classe endereço com todos os dados
@@ -43,6 +43,11 @@ class Usuario{
         return $this->dataNascimento;
     }
 
+    public function setContato($email,  $telefone = NULL, $celular = NULL){
+        $this->contato = new Contato();
+        $this->contato->setContato($email,  $telefone = NULL, $celular = NULL);
+    }
+
 
     public function setLogin($login){
         //Implementar a regra do Login não pode existir no banco de dados um igual
@@ -62,12 +67,28 @@ class Usuario{
         }
     }
 
-    public function setEndereco($endereco){
-        $this->endereco = $endereco;
+    public function setEndereco($rua, $numero, $cep, $bairro, $cidade, $estado, $pais){
+        
+        $this->endereco = new Endereco();
+        $this->endereco->setRua($rua);
+        $this->endereco->setNumero($numero);
+        $this->endereco->setCep($cep);
+        $this->endereco->setBairro($bairro);
+        $this->endereco->setCidade($cidade);
+        $this->endereco->setEstado($estado);
+        $this->endereco->setPais($pais);
     }
 
     public function getEndereco(){
-        return $this->endereco;
+        $endereco['rua'] = $this->endereco->getRua();
+        $endereco['numero'] = $this->endereco->getNumero();
+        $endereco['cep'] = $this->endereco->getCep();
+        $endereco['bairro'] = $this->endereco->getBairro();
+        $endereco['cidade'] = $this->endereco->getCidade();
+        $endereco['estado'] = $this->endereco->getEstado();
+        $endereco['pais'] = $this->endereco->getPais();
+        
+        return $endereco;
     }
 
     public function setVenda($compra){
@@ -79,10 +100,4 @@ class Usuario{
     }
 
 }
-
-$p1 = new Usuario();
-
-
-var_dump($p1);
-
 ?>

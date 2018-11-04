@@ -1,8 +1,7 @@
 <?php 
 require_once('views/partials/header-admin.php');
-require_once('class/Sql.php');
 
-$consulta = "SELECT * FROM tb_usuarios";
+$consulta = "SELECT * FROM tb_users";
 
 $conn = $mysqli->query($consulta) or die($mysqli->error);
 ?>
@@ -21,11 +20,12 @@ $conn = $mysqli->query($consulta) or die($mysqli->error);
             <h6>Usuarios cadastrados</h6>
         </div>
         <div class="card card-body" style="padding:0; ">
-            <table name="tabela" class="table table-sm table-hover table-light table-bordered " style="text-align:center;">
+            <table name="tabela" class="table table-sm table-hover table-light table-bordered" style="text-align:center;">
                 <thead  style="background: whitesmoke">
                     <th>Id Usuario</th>
+                    <th>Id Pessoa</th>
                     <th>Login</th>
-                    <th>Senha</th>
+                    <th>Admin?</th>
                     <th>Data de cadastro</th>
                     <th>Ações</th>
                 </thead>
@@ -33,10 +33,11 @@ $conn = $mysqli->query($consulta) or die($mysqli->error);
                 <tbody>
                 <?php while($dado = $conn->fetch_array()){?>
                     <tr>
-                        <th><?php echo $dado['idusuario']?></th>
+                        <th><?php echo $dado['iduser']?></th>
+                        <td><?php echo $dado['idperson']?></td>
                         <td><?php echo $dado['deslogin']?></td>
-                        <td><?php echo $dado['dessenha']?></td>
-                        <td><?php echo $dado['dtcadastro']?></td>
+                        <td><?php echo $dado['inadmin']?></td>
+                        <td><?php echo $dado['dtregister']?></td>
                         <td id="acoes">
                             <a href="#" id="info-user"><i class="fa fa-info-circle text-info"></i></a>
                             <a href="#" id="edit-user"><i class="fa fa-edit text-primary"></i></a>

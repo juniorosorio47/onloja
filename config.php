@@ -10,14 +10,6 @@ spl_autoload_register(function($class_name){
 
 });
 
-$host = 'localhost';
-$user = 'root';
-$password = '';
-
-$conn = new mysqli($host, $user, $password);
-
-$conn->query("CREATE TABLE produtos");
-
-echo "Tabela criada com sucesso!!!"
+include_once('class/Sql.php');
 
 ?>

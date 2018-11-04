@@ -7,7 +7,7 @@ class Endereco{
     private $bairro;
     private $cidade;
     private $estado;
-    private $pais = "Brasil";
+    private $pais;
 
     public function setRua($rua){
         $this->rua = $rua;
