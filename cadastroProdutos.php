@@ -2,6 +2,7 @@
 include_once('views/partials/header-admin.php');
 include_once('config.php');
 ?>
+
 <script>
     $(document).ready(function(){
 
@@ -18,8 +19,14 @@ include_once('config.php');
             $('.alert-danger').hide("slow");
         });
 
+        $('.close').click(function(event){
+            $('.alert-success').fadeOut("fast");
+            $('.alert-danger').fadeOut("fast");
+        })
+
     });
 </script>
+
 <?php
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $ativo = trim(filter_input(INPUT_POST, 'ativo', FILTER_SANITIZE_STRING));
@@ -29,11 +36,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $preco = trim(filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_STRING));
     
     if(empty($nome) || empty($marca) || empty($descricao) || empty($preco)){
-        echo "<script> $(document).ready(function(){ $('#add-produto').show();});</script>";
-        echo "<div class='alert alert-danger'>Por favor preencha os campos: Nome, Marca, Descrição e Preço.</div>";
+        echo "<script> $(document).ready(function(){ $('#add-produto').fadeIn();});</script>";
+        echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome, Marca, Descrição e Preço.</div>";
     }else{
         if($produto = new Produto($ativo, $nome, $marca, $descricao, $preco)){ 
-            echo "<div class='alert alert-success'>Produto adicionado com sucesso!</div>";
+            echo "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Produto adicionado com sucesso!</div>";
         }else{
             
             echo "<div class='alert alert-danger'>Não foi possível adicionar o produto.</div>";
@@ -68,7 +75,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 </td>
             </tr>
             <tr>
-                <td><label for="nome">Nome:</label></td>
+                <td><label for="nome">Nome / Modelo:</label></td>
                 <td><input name="nome" type="text" class="form-control" placeholder="Nome de exibição do produto"></td>
             </tr>
             <tr>
@@ -104,7 +111,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <table class="table table-light table-bordered table-hover">
     <thead >
         <th>Situação</th>
-        <th>Nome</th>
+        <th>Nome / Modelo</th>
         <th>Marca</th>
         <th>Descrição</th>
         <th>Preço</th>
