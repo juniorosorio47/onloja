@@ -3,58 +3,39 @@
 class Produto{
 
     private $id; //Gerado no banco de dados
+    private $ativo;//Verifica de o produto esta para venda
     private $nome;
-    private $descricao;
     private $marca;
-    private $foto;//Link para a foto na pasta imagens
+    private $descricao;
     private $preco;
-    private $categoria;
-    private $qtdProduto;//Quantidade do produto em estoque
-    private static $qtdProdutos=0;//Quantidade de produtos geral
+    private $foto;//Link para a foto na pasta imagens
+    //Chaves estrangeiras
+    private $carrinho;
+    private $categoria;//Classe categoria
 
-    public function __construct(){
-        //Aumenta a quantidade de produtos quando cria um novo
-       $this->qtdProdutos++;
-    }
+    public function __construct($ativo, $nome, $marca, $descricao, $preco){
+        $mysqli = new mysqli('localhost','root','','onloja');
+        if($mysqli){
+            echo "<br>"."Conectado ao banco!"."<br>";
+        }
 
-    public function setNome($nome){
-        $this->nome = $nome;
-    }
+        $insert = "INSERT INTO tbproducts (activeproduct, nameproduct, brandproduct, descproduct, priceproduct) VALUES('$ativo', '$nome', '$marca', '$descricao', '$preco');";
 
-    public function getNome(){
-        return $this->nome;
-    }
+        $cadastra = $mysqli->query($insert);
 
-    public function setDescricao($descricao){
-        $this->descricao = $descricao;
-    }
-
-    public function getDescricao(){
-        return $this->descricao;
-    }
-
-    public function setFoto($foto){
-        $this->foto = $foto;
-    }
-
-    public function getFoto(){
-        return $this->foto;
-    }
-
-    public function setPreco($preco){
-        $this->preco = $preco;
-    }
-
-    public function getPreco(){
-        return $this->preco;
-    }
-
-    public function setQtdPProduto($quantidade){
-        $this->qtdProduto = $quantidade;
-    }
-
-    public function getQtdProduto(){
-        return $this->qtdProduto;
+        if($cadastra){
+            echo "<br>"."Cadastro efetuado com sucesso!"."<br>";
+        }else{
+            echo "<br>"."Fudeu, algo de errado."."<br>";
+        }
     }
 
 }
+
+$ativo = 1;
+$nome = "Rola";
+$marca = "Rolas SA";
+$descricao = "Rola dura top";
+$preco = 10;
+
+$obj = new Produto($ativo, $nome, $marca, $descricao, $preco);

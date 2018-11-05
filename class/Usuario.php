@@ -5,15 +5,18 @@ class Usuario{
     private $id;
     private $ativo = 1;//Usado para verificar se o usuário está ativo, não serão apagados os dados dos usuários. Somente desativados e retirados da vizualização
     private $nome;
-    private $cpf;
+    private $cpf; //Verificar se já não está cadastrado
     private $dataNascimento;
-    private $contato;//Usar a função setContato($email, $telefone, $contato);
-    private $login;//Login ou email
+    private $sexo;
+    private $login;//Verificar se já não está cadastrado
     private $senha;//No mínimo 8 caracteres com letra e número
-    private $endereco;//Classe endereço com todos os dados
-    private $dataCadastro;
     private $isAdm;
-
+    private $dataCadastro;
+    //Adicionar as chaves estrangeiras
+    private $contato;//Usar a função setContato($email, $telefone, $contato);
+    private $endereco;//Classe endereço com todos os dados
+    private $carrinho;//Criar o carrinho
+    
     public function setAtivo($ativo){
         $this->ativo = $ativo;
     }

@@ -1,14 +1,29 @@
 <?php
+class Sql{
 
-    $servidor = 'localhost';
-    $usuario = 'root';
-    $senha = '';
-    $banco = 'db_ecommerce';
+    private $servidor = 'localhost';
+    private $usuario = 'root';
+    private $senha = '';
+    private $banco = 'onloja';
+    private $mysqli;
 
-    // Conecta-se ao banco de dados MySQL
-    $mysqli = new mysqli($servidor, $usuario, $senha, $banco);
+    public function getUserResumedInfo(){
+        $this->mysqli = new mysqli($this->servidor, $this->usuario, $this->senha, $this->banco);
 
-    // Caso algo tenha dado errado, exibe uma mensagem de erro
-    if (mysqli_connect_errno()) trigger_error(mysqli_connect_error());
+        //Busca as informações básicas do usuário
+        $busca = "SELECT tbusers.iduser, tbusers.activeuser, tbusers.nameuser, tbusers.loginuser, tbusers.isadm, tbusers.dtcadastro, tbcontact.email, tbcontact.cell FROM tbusers JOIN tbcontact ON tbusers.contactuser = tbcontact.id";
+        $results = $this->mysqli->query($busca);
+        return $results->fetch_assoc();
+    }
+
+    //Busca todas as informações do usuario
+    public function getUserCompleteInfo(){
+        $this->mysqli = new mysqli($this->servidor, $this->usuario, $this->senha, $this->banco);
+        $busca = "SELECT * FROM tbusers JOIN tbcontact ON tbusers.contactuser = tbcontact.id JOIN tbaddress ON tbusers.addressuser = idaddress";
+        $results = $this->mysqli->query($busca);
+        return $results->fetch_assoc();
+    }
     
 
+
+}
