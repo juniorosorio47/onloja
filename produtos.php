@@ -58,12 +58,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     .icon{
         margin-left: 10px;
     }
+    #prod{
+        margin-left:10px;
+    }
 </style>
 <form id="add-produto" action="cadastroProdutos.php" class="form-group" method="POST">
     <table class="table table-light table-bordered">
-        <thead>
-            <th>Adicionar Produtos</th>
-        </thead>
+        <h4 id="prod">Adicionar Produto:</h4>
         <tbody>
             <tr>
                 <td><label for="ativo">Finalidade do produto:</label></td>
@@ -108,6 +109,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     <button id="abrir-cadastro" class="btn btn-info"><i class="fa fa-plus"></i> Adicionar Produto</button>
 </div>
 
+<h4 id="add-prod">Todos os Produtos:</h4>
 <table class="table table-light table-bordered table-hover">
     <thead >
         <th>Situação</th>

@@ -27,6 +27,8 @@ class Produto{
         $busca = "SELECT * FROM tbproducts";
 
         $resultado = $mysqli->query($busca);
+
+        return $resultado->fetch_assoc();
     }
 
 }
