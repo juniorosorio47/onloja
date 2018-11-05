@@ -8,7 +8,7 @@ class Cliente extends Usuario{
     function getCompras(){
         foreach($this->compras as $item){
             if(empty($item)){
-               echo "vazio";
+               echo "";
             }
             else{
                 echo "$item\n";
@@ -16,8 +16,8 @@ class Cliente extends Usuario{
         }
     }
 
-    function setCompras($compra){
+    function setCompras($compra){ 
         $this->compras[] = $compra;
-    }
-
+    } 
+ 
 }

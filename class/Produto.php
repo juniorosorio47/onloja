@@ -15,27 +15,18 @@ class Produto{
 
     public function __construct($ativo, $nome, $marca, $descricao, $preco){
         $mysqli = new mysqli('localhost','root','','onloja');
-        if($mysqli){
-            echo "<br>"."Conectado ao banco!"."<br>";
-        }
 
         $insert = "INSERT INTO tbproducts (activeproduct, nameproduct, brandproduct, descproduct, priceproduct) VALUES('$ativo', '$nome', '$marca', '$descricao', '$preco');";
 
         $cadastra = $mysqli->query($insert);
+    }
 
-        if($cadastra){
-            echo "<br>"."Cadastro efetuado com sucesso!"."<br>";
-        }else{
-            echo "<br>"."Fudeu, algo de errado."."<br>";
-        }
+    public function getProdutos(){
+        $mysqli = new mysqli('localhost','root','','onloja');
+
+        $busca = "SELECT * FROM tbproducts";
+
+        $resultado = $mysqli->query($busca);
     }
 
 }
-
-$ativo = 1;
-$nome = "Rola";
-$marca = "Rolas SA";
-$descricao = "Rola dura top";
-$preco = 10;
-
-$obj = new Produto($ativo, $nome, $marca, $descricao, $preco);
