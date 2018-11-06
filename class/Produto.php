@@ -13,7 +13,7 @@ class Produto{
     private $carrinho;
     private $categoria;//Classe categoria
 
-    public function __construct($ativo, $nome, $marca, $descricao, $preco){
+    public function setProduto($ativo, $nome, $marca, $descricao, $preco){
         $mysqli = new mysqli('localhost','root','','onloja');
 
         $insert = "INSERT INTO tbproducts (activeproduct, nameproduct, brandproduct, descproduct, priceproduct) VALUES('$ativo', '$nome', '$marca', '$descricao', '$preco');";
@@ -28,7 +28,7 @@ class Produto{
 
         $resultado = $mysqli->query($busca);
 
-        return $resultado->fetch_assoc();
+        return $resultado;
     }
 
 }
