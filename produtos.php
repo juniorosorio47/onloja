@@ -2,6 +2,7 @@
 include_once('views/partials/header-admin.php');
 include_once('config.php');
 
+$categoria = 0;
 $ativo = $nome = $marca = $descricao = $preco = '';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -9,15 +10,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
     $marca = trim(filter_input(INPUT_POST, 'marca', FILTER_SANITIZE_STRING));
     $descricao = trim(filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING));
+    $categoria = trim(filter_input(INPUT_POST, 'categoria', FILTER_SANITIZE_STRING));
     $preco = trim(filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_STRING));
 
     
-    if(empty($nome) || empty($marca) || empty($descricao) || empty($preco)){
-        echo "<script> $(document).ready(function(){ $('#add-produto').fadeIn();});</script>";
-        echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome, Marca, Descrição e Preço.</div>";
+    if(empty($nome) || empty($marca) || empty($descricao) || empty($preco) || empty($categoria)){
+        echo "<script> $(document).ready(function(){ $('#add-produto').toggle();});</script>";
+        echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome, Marca, Descrição, Categoria e Preço.</div>";
     }else{
         if($produto = new Produto){ 
-            $produto->setProduto($ativo, $nome, $marca, $descricao, $preco);
+            $produto->setProduto($ativo, $nome, $marca, $descricao, $categoria, $preco);
             echo "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Produto adicionado com sucesso!</div>";
             $ativo = $nome = $marca = $descricao = $preco = '';
         }else{
@@ -39,6 +41,23 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     #prod{
         margin-left:10px;
     }
+    .topo-lista{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    #categorias-filtro{
+        max-width:200px;
+
+    }
+    #div-categorias{
+        width:450px;
+        display: flex;
+        justify-content:space-evenly;
+        align-content: center;
+        align-items: center;
+    }
+
 </style>
 <form id="add-produto" action="produtos.php" class="form-group" method="POST" novalidate="novalidate">
     <table class="table table-light table-bordered">
@@ -63,7 +82,21 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </tr>
             <tr>
                 <td><label for="descricao">Descrição do produto:</label></td>
-                <td><textarea name="descricao" type="text" class="form-control" placeholder="Ex: Smartphone Samsung Galaxy S9 Azul com 128GB, Tela Infinita de 5.8, Dual Chip, Android 8.0, Câmera 12MP, 4GB RAM e Processador Octa-Core" value = "<?php echo htmlspecialchars($descricao);?>"></textarea></td>
+                <td><textarea name="descricao" type="text" class="form-control" placeholder="Ex: Smartphone Samsung Galaxy S9 Azul com 128GB"><?php echo htmlspecialchars($descricao);?></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="categoria">Categoria:</label></td>
+                <td>
+                    <select name="categoria" id="categoria" class="form-control">
+                        <option value="0" selected>Selecione a categoria</option>
+                        <?php 
+                        $cat = new Categoria();
+                        $optionCat = $cat->getCategorias();
+                        while($dado = $optionCat->fetch_array()){
+                        ?>
+                        <option value="<?php echo $dado['idcat']?>"><?php echo $dado['namecat'];}?></option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><label for="preco">Preço:</label></td>
@@ -83,8 +116,20 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </table>
 </form>
 
-<div class="botao-add">
+<div class="topo-lista">
     <button id="abrir-cadastro" class="btn btn-info"><i class="fa fa-plus"></i> Adicionar Produto</button>
+    <div id="div-categorias">
+        <select name="categorias-filtro" id="categorias-filtro" class="form-control">
+            <option value="0">Todas as categorias</option>
+            <?php 
+            $cat = new Categoria();
+            $optionCat = $cat->getCategorias();
+            while($dado = $optionCat->fetch_array()){
+            ?>
+            <option value="<?php echo $dado['idcat']?>"><?php echo $dado['namecat'];}?></option>
+        </select>
+        <input type="text" class="form-control" id="categorias-filtro" placeholder="Pesquisar em produtos:">
+    </div>
 </div>
 
 <h4 id="add-prod">Todos os Produtos:</h4>
@@ -94,28 +139,31 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <th>Nome / Modelo</th>
         <th>Marca</th>
         <th>Descrição</th>
+        <th>Categoria</th>
         <th>Preço</th>
         <th>Data e hora de registro</th>
         <th>Ações</th>
     </thead>
     <tbody>
-        <?php 
-        $produto = new Produto();
-
-        $resultado = $produto->getProdutos();
-
-        while($dado = $resultado->fetch_array()){
-        ?>
-        <tr>
-            <td><?php if($dado['activeproduct']){ echo "Venda";}else{ echo "Estoque";}?></td>
-            <td><?php echo $dado['nameproduct']?></td>
-            <td><?php echo $dado['brandproduct']?></td>
-            <td><?php echo $dado['descproduct']?></td>
-            <td><?php echo "R$ ".$dado['priceproduct'].",00"?></td>
-            <td><?php echo date("d/m/Y H:i:s", strtotime($dado['registerdateproduct']))?></td>
-            <td><a href="#" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="#" class="icon" id="delete"><i class="fa fa-trash text-danger"></i></a></td>
-        </tr>
-            <?php }?>
+            <tr>
+            <?php 
+            $produto = new Produto();
+            $resultado = $produto->getProdutos();
+        
+            while($dado = $resultado->fetch_array()){
+                if(empty($dado)==true){
+            ?>
+                <td><?php echo "Nenhum produto cadastrado.";}?></td>
+                <td><?php if($dado['activeproduct']){ echo "Venda";}else{ echo "Estoque";}?></td>
+                <td><?php echo $dado['nameproduct']?></td>
+                <td><?php echo $dado['brandproduct']?></td>
+                <td><?php echo $dado['descproduct']?></td>
+                <td><?php echo $dado['namecat']?></td>
+                <td><?php echo "R$ ".$dado['priceproduct'].",00"?></td>
+                <td><?php echo date("d/m/Y H:i:s", strtotime($dado['registerdateproduct']))?></td>
+                <td><a href="#" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="#" class="icon" id="delete"><i class="fa fa-trash text-danger"></i></a></td>
+            </tr>
+                <?php }?>
     </tbody>
 </table>
 
@@ -148,5 +196,5 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 
 <?php
-include_once('views/partials/footer-admin.php')
+include_once('views/partials/footer-admin.php');
 ?>

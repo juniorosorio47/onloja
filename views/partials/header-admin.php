@@ -19,7 +19,7 @@
             <a class="navbar-brand" href="#">OnLoja</a>
         </div>
         <div class="pesquisar-admin" style=" display:flex;">
-            <input class="form-control" type="search" placeholder="Pesquisar" aria-label="Pesquisar" style="width:200px; margin-right:5px;">
+            <input class="form-control" type="search" placeholder="Pesquisar no sistema:" aria-label="Pesquisar" style="width:200px; margin-right:5px;">
             <!--Vai para a loja-->
             <div class="ir-loja">
                 <a href="#"><i class="fa fa-share-square"></i>Ir para OnLoja</a> 

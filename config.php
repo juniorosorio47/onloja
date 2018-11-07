@@ -10,6 +10,6 @@ spl_autoload_register(function($class_name){
 
 });
 
-include_once('class/Sql.php');
+include_once('class/conexao.php');
 
 ?>

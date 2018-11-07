@@ -13,10 +13,10 @@ class Produto{
     private $carrinho;
     private $categoria;//Classe categoria
 
-    public function setProduto($ativo, $nome, $marca, $descricao, $preco){
+    public function setProduto($ativo, $nome, $marca, $descricao, $categoria, $preco){
         $mysqli = new mysqli('localhost','root','','onloja');
 
-        $insert = "INSERT INTO tbproducts (activeproduct, nameproduct, brandproduct, descproduct, priceproduct) VALUES('$ativo', '$nome', '$marca', '$descricao', '$preco');";
+        $insert = "INSERT INTO tbproducts (activeproduct, nameproduct, brandproduct, descproduct, catproduct, priceproduct) VALUES('$ativo', '$nome', '$marca', '$descricao', '$categoria', '$preco');";
 
         $cadastra = $mysqli->query($insert);
     }
@@ -24,7 +24,8 @@ class Produto{
     public function getProdutos(){
         $mysqli = new mysqli('localhost','root','','onloja');
 
-        $busca = "SELECT * FROM tbproducts";
+        //Busca na tabela produtos juntando o idcat com catprodutcs
+        $busca = "SELECT * FROM tbproducts JOIN tbcat ON tbcat.idcat = tbproducts.catproduct";
 
         $resultado = $mysqli->query($busca);
 
