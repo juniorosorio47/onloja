@@ -1,13 +1,9 @@
 <?php
-require_once('conexao.php');
+
 //Criar as categorias antes dos produtos
 class Categoria{
     private $nome;
     private $descricao;
-
-    
-
-    
 
     public function setNome($nome){
 
@@ -33,9 +29,9 @@ class Categoria{
 
     }
 
-    public function guardarCatNoBanco(){
+    public function setCategoria($nome, $descricao){
         $mysqli = new mysqli('localhost','root','','onloja');
-        $insertBanco = "INSERT INTO tbcat (namecat, desccat) VALUES('$this->nome', '$this->descricao');";
+        $insertBanco = "INSERT INTO tbcat (namecat, desccat) VALUES('$nome', '$descricao');";
         
         $mysqli->query($insertBanco);
 

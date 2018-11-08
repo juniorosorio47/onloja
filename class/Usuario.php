@@ -9,7 +9,7 @@ class Usuario{
     private $dataNascimento;
     private $sexo;
     private $login;//Verificar se já não está cadastrado
-    private $senha;//No mínimo 8 caracteres com letra e número
+    private $senha;//USAR MD5 PARA CRIPTOGRAFAR
     private $isAdm;
     private $dataCadastro;
     //Adicionar as chaves estrangeiras

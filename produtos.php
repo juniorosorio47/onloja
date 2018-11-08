@@ -4,7 +4,13 @@ include_once('config.php');
 
 $categoria = 0;
 $ativo = $nome = $marca = $descricao = $preco = '';
+if(isset($_FILES['foto'])){
+    $extensao = strtolower(substr($_FILES['foto']['name'], -4));
+    $novoNome = md5(time()).$extensao;
+    $pastaUp = "imagens/produtos/";
 
+    move_uploaded_file($_FILES['foto']['tmp_name'], $pastaUp.$novoNome);
+}else{$_FILES['foto'] = '';}
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $ativo = trim(filter_input(INPUT_POST, 'ativo', FILTER_SANITIZE_STRING));
     $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
@@ -14,12 +20,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $preco = trim(filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_STRING));
 
     
-    if(empty($nome) || empty($marca) || empty($descricao) || empty($preco) || empty($categoria)){
+    if(empty($nome) || empty($marca) || empty($descricao) || empty($preco) || empty($categoria) || !isset($_FILES['foto'])){
         echo "<script> $(document).ready(function(){ $('#add-produto').toggle();});</script>";
         echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome, Marca, Descrição, Categoria e Preço.</div>";
     }else{
         if($produto = new Produto){ 
-            $produto->setProduto($ativo, $nome, $marca, $descricao, $categoria, $preco);
+            $produto->setProduto($ativo, $nome, $marca, $descricao, $categoria, $preco, $novoNome);
             echo "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Produto adicionado com sucesso!</div>";
             $ativo = $nome = $marca = $descricao = $preco = '';
         }else{
@@ -59,7 +65,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     }
 
 </style>
-<form id="add-produto" action="produtos.php" class="form-group" method="POST" novalidate="novalidate">
+<form id="add-produto" action="produtos.php" class="form-group" method="POST" enctype="multipart/form-data">
     <table class="table table-light table-bordered">
         <h4 id="prod">Adicionar Produto:</h4>
         <tbody>
@@ -122,7 +128,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <select name="categorias-filtro" id="categorias-filtro" class="form-control">
             <option value="0">Todas as categorias</option>
             <?php 
-            $cat = new Categoria();
             $optionCat = $cat->getCategorias();
             while($dado = $optionCat->fetch_array()){
             ?>
@@ -142,6 +147,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <th>Categoria</th>
         <th>Preço</th>
         <th>Data e hora de registro</th>
+        <th>Imagem</th>
         <th>Ações</th>
     </thead>
     <tbody>
@@ -161,6 +167,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 <td><?php echo $dado['namecat']?></td>
                 <td><?php echo "R$ ".$dado['priceproduct'].",00"?></td>
                 <td><?php echo date("d/m/Y H:i:s", strtotime($dado['registerdateproduct']))?></td>
+                <td><img style="max-width:100px;" src="imagens/produtos/<?php echo $dado['photoproduct']?>" alt="Imagem não cadastrada  "></td>
                 <td><a href="#" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="#" class="icon" id="delete"><i class="fa fa-trash text-danger"></i></a></td>
             </tr>
                 <?php }?>

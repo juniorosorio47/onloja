@@ -40,7 +40,7 @@
             <!--Listagem de produtos e editar produtos-->
             <li id="produtos-admin"><a href="produtos.php"><i class="fa fa-box"></i> Produtos</a></li>
             <!--Categorias dos produtos-->
-            <li id="categorias-admin"><a href="#"><i class="fa fa-list"></i> Categorias</a></li>
+            <li id="categorias-admin"><a href="categorias.php"><i class="fa fa-list"></i> Categorias</a></li>
             <!--Relatórios das vendas-->
             <li id="vendas-admin"><a href="#"><i class="fa fa-shopping-cart"></i> Vendas</a></li>
             <!--Listagem dos usuários-->
