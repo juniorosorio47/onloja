@@ -19,7 +19,6 @@
             <a class="navbar-brand" href="#">OnLoja</a>
         </div>
         <div class="pesquisar-admin" style=" display:flex;">
-            <input class="form-control" type="search" placeholder="Pesquisar no sistema:" aria-label="Pesquisar" style="width:200px; margin-right:5px;">
             <!--Vai para a loja-->
             <div class="ir-loja">
                 <a href="#"><i class="fa fa-share-square"></i>Ir para OnLoja</a> 
@@ -44,7 +43,9 @@
             <!--Relatórios das vendas-->
             <li id="vendas-admin"><a href="#"><i class="fa fa-shopping-cart"></i> Vendas</a></li>
             <!--Listagem dos usuários-->
-            <li id="usuarios-admin"><a href=""><i class="fa fa-user"></i> Usuários</a></li>
+            <li id="usuarios-admin"><a href="#"><i class="fa fa-user"></i> Usuários</a></li>
+            <!--Produtos em destaque-->
+            <li id="destaque-admin"><a href="#"><i class="fa fa-star"></i> Produtos destaque</a></li>
         </ul>
     </div>
     <!--Conteúdo do site-->

@@ -2,6 +2,7 @@
 include_once('views/partials/header-admin.php');
 include_once('config.php');
 
+$total = 0;
 $categoria = 0;
 $nome = $descricao = '';
 
@@ -81,7 +82,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     <button id="abrir-cadastro" class="btn btn-info"><i class="fa fa-plus"></i> Adicionar Categoria</button>
 </div>
 
-<h4 id="add-prod">Todas as Categorias:</h4>
+<div class="info-cat">
+    <h4 id="add-prod">Todas as Categorias:</h4>
+</div>
 <table class="table table-light table-bordered table-hover">
     <thead >
         <th>Nome Categoria</th>
@@ -93,15 +96,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <?php 
             $categoria = new Categoria();
             $resultado = $categoria->getCategorias();
-        
+
             while($dado = $resultado->fetch_array()){
-            ?>
+                $total++;
+            ?>  
                 <td><?php echo $dado['namecat']?></td>
                 <td><?php echo $dado['desccat']?></td>
                 <td><a href="#" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="#" class="icon" id="delete"><i class="fa fa-trash text-danger"></i></a></td>
             </tr>
                 <?php }?>
     </tbody>
+    <caption><?php echo "Encontradas ".$total. " categorias.";?></caption>
 </table>
 
 <!--Scripts  de manipulação do DOM-->

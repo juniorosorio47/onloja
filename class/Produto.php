@@ -28,4 +28,26 @@ class Produto{
         return $results = $mysqli->query($busca);
     }
 
+    public function getProdutosCategoria($filtro){
+        $mysqli = new mysqli("localhost", "root", "", "onloja");
+        $busca = "SELECT * FROM tbproducts JOIN tbcat ON tbproducts.catproduct = tbcat.idcat WHERE idcat LIKE '$filtro'";
+
+        return $results = $mysqli->query($busca);
+    }
+
+    public function deleteProdutos($idProduto){
+        $mysqli = new mysqli("localhost", "root", "", "onloja");
+        $delete = "DELETE FROM tbproducts WHERE idproduct ='$idProduto'";
+        $mysqli->query($delete);
+    }
+
+    public function editProdutos($idProduto){
+        $mysqli = new mysqli("localhost", "root", "", "onloja");
+        $edit = "SELECT * FROM tbproducts WHERE idproduct ='$idProduto'";
+        $resultado = $mysqli->query($edit);
+      
+
+        return $resultado->fetch_array();
+    }
+
 }

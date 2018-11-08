@@ -2,15 +2,43 @@
 include_once('views/partials/header-admin.php');
 include_once('config.php');
 
+$produto = new Produto();
 $categoria = 0;
+$update = false;
 $ativo = $nome = $marca = $descricao = $preco = '';
+
+$filtro = filter_input(INPUT_GET, 'categorias-filtro');
+
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    $produto->deleteProdutos($id);
+    unset($_GET['delete']);
+    echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close close-get' data-dismiss='alert'>&times</a>Produto excluido com sucesso!</div>";
+}
+
 if(isset($_FILES['foto'])){
     $extensao = strtolower(substr($_FILES['foto']['name'], -4));
     $novoNome = md5(time()).$extensao;
     $pastaUp = "imagens/produtos/";
 
     move_uploaded_file($_FILES['foto']['tmp_name'], $pastaUp.$novoNome);
+    
 }else{$_FILES['foto'] = '';}
+
+if(isset($_GET['edit'])){
+    $idEdit = $_GET['edit'];
+
+    $resultado = $produto->editProdutos($idEdit);
+
+    $ativo = $resultado['activeproduct'];
+    $nome = $resultado['nameproduct'];
+    $marca = $resultado['brandproduct'];
+    $descricao = $resultado['descproduct'];
+    $preco = $resultado['priceproduct'];
+    $categoria = $resultado['catproduct'];
+    $update = true;
+}
+
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $ativo = trim(filter_input(INPUT_POST, 'ativo', FILTER_SANITIZE_STRING));
     $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
@@ -18,7 +46,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $descricao = trim(filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING));
     $categoria = trim(filter_input(INPUT_POST, 'categoria', FILTER_SANITIZE_STRING));
     $preco = trim(filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_STRING));
-
     
     if(empty($nome) || empty($marca) || empty($descricao) || empty($preco) || empty($categoria) || !isset($_FILES['foto'])){
         echo "<script> $(document).ready(function(){ $('#add-produto').toggle();});</script>";
@@ -33,6 +60,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         }
     }
 }
+
+
 ?>
 <style>
     #produtos-admin{
@@ -67,7 +96,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 </style>
 <form id="add-produto" action="produtos.php" class="form-group" method="POST" enctype="multipart/form-data">
     <table class="table table-light table-bordered">
-        <h4 id="prod">Adicionar Produto:</h4>
+        
+        <h4 id='prod'>Adicionar Produto:</h4>
+        
         <tbody>
             <tr>
                 <td><label for="ativo">Finalidade do produto:</label></td>
@@ -115,7 +146,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </tr>
             <tr>
                 <td></td>
-                <td><button class="btn btn-primary" type="submit" value="cadastrar">Cadastrar</button>
+                <td><button class="btn btn-primary" type="submit" id="cadastrar" value="cadastrar">Cadastrar</button>
                 <button class="btn btn-danger" id="fechar-cadastro" value="cancelar">Cancelar</button></td>
             </tr>
         </tbody>
@@ -125,7 +156,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <div class="topo-lista">
     <button id="abrir-cadastro" class="btn btn-info"><i class="fa fa-plus"></i> Adicionar Produto</button>
     <div id="div-categorias">
-        <select name="categorias-filtro" id="categorias-filtro" class="form-control">
+        <select name="categorias-filtro" id="categorias-filtro" class="form-control" value="<?php echo htmlspecialchars($filtro);?>">
             <option value="0">Todas as categorias</option>
             <?php 
             $optionCat = $cat->getCategorias();
@@ -133,7 +164,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             ?>
             <option value="<?php echo $dado['idcat']?>"><?php echo $dado['namecat'];}?></option>
         </select>
-        <input type="text" class="form-control" id="categorias-filtro" placeholder="Pesquisar em produtos:">
+        <a href="produtos.php"><button class="btn btn-primary" >Filtrar</button></a>
     </div>
 </div>
 
@@ -152,14 +183,18 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </thead>
     <tbody>
             <tr>
-            <?php 
-            $produto = new Produto();
+            <?php
+            $total = 0;
             $resultado = $produto->getProdutos();
+
+            if(isset($filtro)){
+                $resultado = $produto->getProdutosCategoria($filtro);
+            }
+            
         
             while($dado = $resultado->fetch_array()){
-                if(empty($dado)==true){
+                $total++;
             ?>
-                <td><?php echo "Nenhum produto cadastrado.";}?></td>
                 <td><?php if($dado['activeproduct']){ echo "Venda";}else{ echo "Estoque";}?></td>
                 <td><?php echo $dado['nameproduct']?></td>
                 <td><?php echo $dado['brandproduct']?></td>
@@ -168,10 +203,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 <td><?php echo "R$ ".$dado['priceproduct'].",00"?></td>
                 <td><?php echo date("d/m/Y H:i:s", strtotime($dado['registerdateproduct']))?></td>
                 <td><img style="max-width:100px;" src="imagens/produtos/<?php echo $dado['photoproduct']?>" alt="Imagem não cadastrada  "></td>
-                <td><a href="#" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="#" class="icon" id="delete"><i class="fa fa-trash text-danger"></i></a></td>
+                <td><a href="produtos.php?edit=<?php echo $dado['idproduct']?>" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="produtos.php?delete=<?php echo $dado['idproduct']?>" class="icon" id="delete" method="GET" action="produtos.php"><i class="fa fa-trash text-danger"></i></a></td>
             </tr>
                 <?php }?>
     </tbody>
+    <caption><?php if($total > 1){ echo "Encontrados ".$total." produtos.";} elseif($total = 1){ echo "Encontrado ".$total." produto.";}?></caption>
 </table>
 
 <!--Scripts  de manipulação do DOM-->
@@ -179,6 +215,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $(document).ready(function(){
 
         $('#add-produto').hide();
+       
 
         $('#abrir-cadastro').click(function(event){
             event.preventDefault();
@@ -186,7 +223,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         });
 
         $('#fechar-cadastro').click(function(event){
-            event.preventDefault();
+            var novaURL = "produtos.php";
+            $(window.document.location).attr('href',novaURL);
             $('#add-produto').hide("slow");
             $('.alert-danger').hide("slow");
         });
@@ -194,7 +232,21 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $('.close').click(function(event){
             $('.alert-success').fadeOut("fast");
             $('.alert-danger').fadeOut("fast");
-        })
+
+            var novaURL = "produtos.php";
+            $(window.document.location).attr('href',novaURL);
+        });
+
+        $('.close-get').click(function(event){
+            $('.alert-success').fadeOut("fast");
+            $('.alert-danger').fadeOut("fast");
+        });
+        
+        $('#edit').click(function(event){
+           $('#add-produto').show();
+        });
+        
+
 
     });
 </script>

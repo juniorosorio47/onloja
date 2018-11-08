@@ -1,11 +1,14 @@
+<?php include_once('../config.php');
+include_once('../class/Categoria.php')
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="..\views\partials\css\bootstrap\bootstrap.min.css">
+    <link rel="stylesheet" href="..\views\partials\css\layout.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <title>OnLoja</title>
 </head>
@@ -14,7 +17,7 @@
 <header class="navbars">
     <nav class="navbar navbar-dark navbar-principal">
         <div id="logo-navbar">
-            <a class="navbar-brand" href="#">LOGO</a>
+            <a class="navbar-brand" href="#"><h2>OnLoja</h2></a>
         </div>
         <div id="pesquisar-navbar">
             <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
@@ -27,15 +30,14 @@
     <nav class="navbar navbar-dark" id="navbar-categorias">
         <ul id="categorias-navbar">
             <div>Categorias:</div>
-            <li><a href="#">Jogos</a></li>
-            <li><a href="#">Celulares</a></li>
-            <li><a href="#">Informática</a></li>
-            <li><a href="#">Eletrônicos</a></li>
-            <li><a href="#">Eletrodomésticos</a></li>
-            <li><a href="#">Casa</a></li>
-            <li><a href="#">Móveis</a></li>
-            <li><a href="#">Automotivo</a></li>
-            <li><a href="#">Mais...</a></li>
+            <?php 
+            $cat = new Categoria();
+            $resultado = $cat->getCategorias();
+
+            while($dado = $resultado->fetch_array()){
+            ?>
+            <li><a href="#"><?php echo $dado['namecat']?></a></li>
+            <?php }?>
         </ul>
     </nav>
 </header>
