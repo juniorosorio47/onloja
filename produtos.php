@@ -5,7 +5,7 @@ include_once('config.php');
 $produto = new Produto();
 $categoria = 0;
 $update = false;
-$ativo = $nome = $marca = $descricao = $preco = '';
+$ativo = $nome = $marca = $descricao = $preco = $quantidade = '';
 
 $filtro = filter_input(INPUT_GET, 'categorias-filtro');
 
@@ -25,36 +25,23 @@ if(isset($_FILES['foto'])){
     
 }else{$_FILES['foto'] = '';}
 
-if(isset($_GET['edit'])){
-    $idEdit = $_GET['edit'];
-
-    $resultado = $produto->editProdutos($idEdit);
-
-    $ativo = $resultado['activeproduct'];
-    $nome = $resultado['nameproduct'];
-    $marca = $resultado['brandproduct'];
-    $descricao = $resultado['descproduct'];
-    $preco = $resultado['priceproduct'];
-    $categoria = $resultado['catproduct'];
-    $update = true;
-}
-
-if($_SERVER['REQUEST_METHOD']=='POST'){
+if(isset($_POST['cadastrar'])){
     $ativo = trim(filter_input(INPUT_POST, 'ativo', FILTER_SANITIZE_STRING));
     $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
     $marca = trim(filter_input(INPUT_POST, 'marca', FILTER_SANITIZE_STRING));
     $descricao = trim(filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING));
     $categoria = trim(filter_input(INPUT_POST, 'categoria', FILTER_SANITIZE_STRING));
     $preco = trim(filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_STRING));
+    $quantidade = trim(filter_input(INPUT_POST, 'qtd', FILTER_SANITIZE_STRING));
     
-    if(empty($nome) || empty($marca) || empty($descricao) || empty($preco) || empty($categoria) || !isset($_FILES['foto'])){
+    if(empty($nome) || empty($marca) || empty($descricao) || empty($preco) || empty($categoria) || empty($quantidade) || !isset($_FILES['foto'])){
         echo "<script> $(document).ready(function(){ $('#add-produto').toggle();});</script>";
         echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome, Marca, Descrição, Categoria e Preço.</div>";
     }else{
         if($produto = new Produto){ 
-            $produto->setProduto($ativo, $nome, $marca, $descricao, $categoria, $preco, $novoNome);
+            $produto->setProduto($ativo, $nome, $marca, $descricao, $categoria, $preco, $novoNome, $quantidade);
             echo "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Produto adicionado com sucesso!</div>";
-            $ativo = $nome = $marca = $descricao = $preco = '';
+            $ativo = $nome = $marca = $descricao = $preco = $quantidade = '';
         }else{
             echo "<div class='alert alert-danger'>Não foi possível adicionar o produto.</div>";
         }
@@ -137,17 +124,20 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </tr>
             <tr>
                 <td><label for="preco">Preço:</label></td>
-                <td><input name="preco" type="number" class="form-control" placeholder="Ex: R$2800,00" value = "<?php echo htmlspecialchars($preco);?>"></td>
+                <td><input name="preco" type="number" step="0.01" class="form-control" placeholder="Ex: R$2800,00" value = "<?php echo htmlspecialchars($preco);?>"></td>
             </tr>
-   
+            <tr>
+                <td><label for="qtd">Quantidade:</label></td>
+                <td><input name="qtd" type="number" class="form-control" placeholder="Ex: 2" value = "<?php echo htmlspecialchars($quantidade);?>"></td>
+            </tr>
             <tr>
                 <td><label for="foto">Imagem do produto</label></td>
                 <td><input name="foto" type="file" class="form-control" placeholder="Ex: R$2800,00"></td>   
             </tr>
             <tr>
                 <td></td>
-                <td><button class="btn btn-primary" type="submit" id="cadastrar" value="cadastrar">Cadastrar</button>
-                <button class="btn btn-danger" id="fechar-cadastro" value="cancelar">Cancelar</button></td>
+                <td><button class="btn btn-primary" type="submit" id="cadastrar" name="cadastrar">Cadastrar</button>
+                <button class="btn btn-danger" id="fechar-cadastro">Cancelar</button></td>
             </tr>
         </tbody>
     </table>
@@ -177,6 +167,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <th>Descrição</th>
         <th>Categoria</th>
         <th>Preço</th>
+        <th>Quantidade</th>
         <th>Data e hora de registro</th>
         <th>Imagem</th>
         <th>Ações</th>
@@ -200,10 +191,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 <td><?php echo $dado['brandproduct']?></td>
                 <td><?php echo $dado['descproduct']?></td>
                 <td><?php echo $dado['namecat']?></td>
-                <td><?php echo "R$ ".$dado['priceproduct'].",00"?></td>
+                <td><?php echo "R$ ".$dado['priceproduct']?></td>
+                <td><?php echo $dado['qtdproduct']?></td>
                 <td><?php echo date("d/m/Y H:i:s", strtotime($dado['registerdateproduct']))?></td>
                 <td><img style="max-width:100px;" src="imagens/produtos/<?php echo $dado['photoproduct']?>" alt="Imagem não cadastrada  "></td>
-                <td><a href="produtos.php?edit=<?php echo $dado['idproduct']?>" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="produtos.php?delete=<?php echo $dado['idproduct']?>" class="icon" id="delete" method="GET" action="produtos.php"><i class="fa fa-trash text-danger"></i></a></td>
+                <td><a href="editarProdutos.php?edit=<?php echo $dado['idproduct']?>" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="produtos.php?delete=<?php echo $dado['idproduct']?>" class="icon" id="delete" method="GET" action="produtos.php"><i class="fa fa-trash text-danger"></i></a></td>
             </tr>
                 <?php }?>
     </tbody>
