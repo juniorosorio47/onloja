@@ -10,6 +10,7 @@ include_once('../class/Categoria.php')
     <link rel="stylesheet" href="..\views\partials\css\bootstrap\bootstrap.min.css">
     <link rel="stylesheet" href="..\views\partials\css\layout.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="..\views\partials\js\bootstrap\bootstrap.min.js"></script>
     <title>OnLoja</title>
 </head>
 <body>
@@ -17,14 +18,19 @@ include_once('../class/Categoria.php')
 <header class="navbars">
     <nav class="navbar navbar-dark navbar-principal">
         <div id="logo-navbar">
-            <a class="navbar-brand" href="#"><h2>OnLoja</h2></a>
+            <a class="navbar-brand" href="index.php"><h2>OnLoja</h2></a>
         </div>
         <div id="pesquisar-navbar">
             <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
         </div>
         <div id="user-navbar">
-            <i class="fa fa-user-circle" id="user-icone"></i> <a href="#" style="text-decoration:none; color: white">Faça o login ou <br> cadastre-se <i class="fa fa-angle-down"></i></a>
-        </div>
+            <?php if(isset($_SESSION['usuario'])){
+                echo "><a href='perfil.php'><i class='fa fa-user-circle'></i><p>Meu Perfil</p></a> <a href='carrinho.php'><i class='fa fa-shopping-cart'></i><p>Carrinho</p></a>";
+            }else{
+                echo "<a href='cadastro.php'><i class='fa fa-pen'></i><p>Cadastrar</p></a><a href='login.php'><i class='fa fa-sign-in-alt'></i><p>Login</p></a>";
+            }
+            ?>
+        </div> 
     </nav>
 
     <nav class="navbar navbar-dark" id="navbar-categorias">

@@ -14,7 +14,7 @@ class Produto{
     private $carrinho;
     private $categoria;//Classe categoria
 
-    public function setProduto($ativo, $nome, $marca, $descricao, $categoria, $preco, $nomeFoto){
+    public function setProduto($ativo, $nome, $marca, $descricao, $categoria, $preco, $nomeFoto, $quantidade){
         global $mysqli;
         $insert = "INSERT INTO tbproducts (activeproduct, nameproduct, brandproduct, descproduct, catproduct, priceproduct, photoproduct, qtdproduct) VALUES('$ativo', '$nome', '$marca', '$descricao', '$categoria', '$preco', '$nomeFoto', '$quantidade');";
         
@@ -49,10 +49,10 @@ class Produto{
         $mysqli->query($delete);
     }
 
-    public function editProdutos($ativo, $nome, $marca, $descricao, $categoria, $preco, $nomeFoto, $quantidade){
+    public function editProdutos($id, $ativo, $nome, $marca, $descricao, $categoria, $preco, $nomeFoto, $quantidade){
         global $mysqli;
         $update = "UPDATE tbproducts SET activeproduct = '$ativo', nameproduct = '$nome', brandproduct = '$marca', descproduct = '$descricao', catproduct = '$categoria', priceproduct = '$preco', photoproduct = '$nomeFoto', qtdproduct = '$quantidade' WHERE idproduct = '$id'";
-        $resultado = $mysqli->query($update);
+        $mysqli->query($update);
     }
 
 }

@@ -48,6 +48,31 @@ if(isset($_POST['cadastrar'])){
     }
 }
 
+if(isset($_POST['salvar'])){
+    $ativo = trim(filter_input(INPUT_POST, 'ativo', FILTER_SANITIZE_STRING));
+    $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
+    $marca = trim(filter_input(INPUT_POST, 'marca', FILTER_SANITIZE_STRING));
+    $descricao = trim(filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING));
+    $categoria = trim(filter_input(INPUT_POST, 'categoria', FILTER_SANITIZE_STRING));
+    $preco = trim(filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_STRING));
+    $quantidade = trim(filter_input(INPUT_POST, 'qtd', FILTER_SANITIZE_STRING));
+    $idEdit = trim(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING));
+    
+    if(empty($nome) || empty($marca) || empty($descricao) || empty($preco) || empty($categoria) || empty($quantidade)){
+        
+        echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome, Marca, Descrição, Categoria e Preço.</div>";
+    }else{
+        if($produto = new Produto){
+            $produto->editProdutos($idEdit, $ativo, $nome, $marca, $descricao, $categoria, $preco, $novoNome, $quantidade);
+            echo "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Produto modificado com sucesso!</div>";
+            $ativo = $nome = $marca = $descricao = $preco = $quantidade = '';
+        
+        }else{
+            echo "<div class='alert alert-danger'>Não foi possível adicionar o produto.</div>";
+        }
+    }
+}
+
 
 ?>
 <style>
@@ -167,8 +192,8 @@ if(isset($_POST['cadastrar'])){
         <th>Descrição</th>
         <th>Categoria</th>
         <th>Preço</th>
-        <th>Quantidade</th>
-        <th>Data e hora de registro</th>
+        <th>Qtd</th>
+        <th>Registro</th>
         <th>Imagem</th>
         <th>Ações</th>
     </thead>
@@ -232,10 +257,6 @@ if(isset($_POST['cadastrar'])){
         $('.close-get').click(function(event){
             $('.alert-success').fadeOut("fast");
             $('.alert-danger').fadeOut("fast");
-        });
-        
-        $('#edit').click(function(event){
-           $('#add-produto').show();
         });
         
 

@@ -8,7 +8,6 @@ class Usuario{
     private $cpf; //Verificar se já não está cadastrado
     private $dataNascimento;
     private $sexo;
-    private $login;//Verificar se já não está cadastrado
     private $senha;//USAR MD5 PARA CRIPTOGRAFAR
     private $isAdm;
     private $dataCadastro;
@@ -102,5 +101,49 @@ class Usuario{
         //Retornar os ids das compras realizadas pelo cliente e depois buscar no banco e mostrar as vendas
     }
 
+
 }
+
+
+function redirect($local){
+    header("Location: $local");
+}
+
+function setUsuario($nome, $cpf, $dataNascimento, $sexo, $email, $senha){
+    global $mysqli;
+    $insert = "INSERT INTO tb_users (nameuser, cpfuser, datenasc, sexuser, emailuser, passworduser) VALUES('$nome', '$cpf','$dataNascimento','$sexo', '$email', '$senha');";
+    $mysqli->query($insert);
+}
+
+function loginUsuario(){
+    global $mysqli;
+
+    session_start();
+    if(isset($_POST['entrar'])){
+        $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING));
+        $senha = trim(filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING));
+
+        $query = "SELECT * FROM tb_users WHERE emailuser = '$email' AND passworduser = 'md5($senha)';";
+
+        $aux = $mysqli->query($query);
+
+        $resultado = $aux->fetch_array();
+
+        if(mysqli_num_rows($query)==1){
+            if($resultado['inadm'] == 1){
+                $_SESSION['usuario'] = $resultado['iduser'];
+                $_SESSION['inadm'] = $resultado['inadm'];
+                redirect("http://localhost/loja/index.php");
+            }else{
+                $_SESSION['usuario'] = $resultado['iduser'];
+                redirect("index.php");
+            }
+        }else{
+            echo"usuário nao cadastrado";
+                redirect("login.php");
+            exit();
+        }
+    }
+}
+
 ?>

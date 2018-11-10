@@ -1,6 +1,6 @@
 <?php
 require_once("Usuario.php");
-
+$mysqli = new mysqli("localhost", "root", "", "onloja");
 class Cliente extends Usuario{
     private $compras = array();//Array com as compras realizadas pelo cliente
     private $carrinho = array();
@@ -19,5 +19,6 @@ class Cliente extends Usuario{
     function setCompras($compra){ 
         $this->compras[] = $compra;
     } 
- 
+
+    
 }

@@ -21,7 +21,7 @@
         <div class="pesquisar-admin" style=" display:flex;">
             <!--Vai para a loja-->
             <div class="ir-loja">
-                <a href="#"><i class="fa fa-share-square"></i>Ir para OnLoja</a> 
+                <a href="http://localhost/loja/public/index.php"><i class="fa fa-share-square"></i>Ir para OnLoja</a> 
             </div>
             <button class="btn"><i class="fa fa-sign-out-alt"></i>  Sair</button>
         </div>
@@ -45,7 +45,7 @@
             <!--Listagem dos usuários-->
             <li id="usuarios-admin"><a href="#"><i class="fa fa-user"></i> Usuários</a></li>
             <!--Produtos em destaque-->
-            <li id="destaque-admin"><a href="#"><i class="fa fa-star"></i> Produtos destaque</a></li>
+            <li id="destaque-admin"><a href="produtosDestaque.php"><i class="fa fa-star"></i> Produtos destaque</a></li>
         </ul>
     </div>
     <!--Conteúdo do site-->

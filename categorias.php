@@ -5,8 +5,16 @@ include_once('config.php');
 $total = 0;
 $categoria = 0;
 $nome = $descricao = '';
+$cat = new Categoria();
 
-if($_SERVER['REQUEST_METHOD']=='POST'){
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    $cat->deleteCategorias($id);
+    unset($_GET['delete']);
+    echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close close-get' data-dismiss='alert'>&times</a>Categoria excluida com sucesso!</div>";
+}
+
+if(isset($_POST['cadastrar'])){
     $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
     $descricao = trim(filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING));
 
@@ -18,6 +26,26 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         if($cat = new Categoria){ 
             $cat->setCategoria($nome, $descricao);
             echo "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Categoria adicionada com sucesso!</div>";
+            $nome = $descricao = '';
+        }else{
+            echo "<div class='alert alert-danger'>Não foi possível adicionar a categoria.</div>";
+        }
+    }
+}
+
+if(isset($_POST['salvar'])){
+    $id = trim(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING));
+    $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
+    $descricao = trim(filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING));
+
+    
+    if(empty($nome) || empty($descricao)){
+        echo "<script> $(document).ready(function(){ $('#add-produto').toggle();});</script>";
+        echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome e Descrição.</div>";
+    }else{
+        if($cat = new Categoria){ 
+            $cat->editCategorias($id, $nome, $descricao);
+            echo "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Categoria modificada com sucesso!</div>";
             $nome = $descricao = '';
         }else{
             echo "<div class='alert alert-danger'>Não foi possível adicionar a categoria.</div>";
@@ -71,7 +99,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
             <tr>
                 <td></td>
-                <td><button class="btn btn-primary" type="submit" value="cadastrar">Cadastrar</button>
+                <td><button class="btn btn-primary" type="submit" id="cadastrar" name="cadastrar">Cadastrar</button>
                 <button class="btn btn-danger" id="fechar-cadastro" value="cancelar">Cancelar</button></td>
             </tr>
         </tbody>
@@ -84,6 +112,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 <div class="info-cat">
     <h4 id="add-prod">Todas as Categorias:</h4>
+    <p>Caso a categoria estiver sendo usada em algum produto, não será possível excluir.</p>
+    
 </div>
 <table class="table table-light table-bordered table-hover">
     <thead >
@@ -102,7 +132,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             ?>  
                 <td><?php echo $dado['namecat']?></td>
                 <td><?php echo $dado['desccat']?></td>
-                <td><a href="#" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="#" class="icon" id="delete"><i class="fa fa-trash text-danger"></i></a></td>
+                <td><a href="editarCategorias.php?edit=<?php echo $dado['idcat']?>" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="categorias.php?delete=<?php echo $dado['idcat']?>" class="icon" id="delete" name="delete" method="get" action="categorias.php"><i class="fa fa-trash text-danger"></i></a></td>
             </tr>
                 <?php }?>
     </tbody>
@@ -129,7 +159,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $('.close').click(function(event){
             $('.alert-success').fadeOut("fast");
             $('.alert-danger').fadeOut("fast");
-        })
+
+            var novaURL = "categorias.php";
+            $(window.document.location).attr('href',novaURL);
+        });
+        
 
     });
 </script>
