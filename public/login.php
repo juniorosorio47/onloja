@@ -77,13 +77,13 @@ if(isset($_POST['cadastro'])){
     }
    
 </style>
-<?php 
+<?php  
         
         loginUsuario();
         ?>
 
     <div class="login-user bg-light">
-    <form action="login.php" method="post" >
+    <form action="login.php" method="post">
         
         <div class="card">
             <div class="card card-header"><h5>Login</h5></div>

@@ -11,6 +11,9 @@ $filtro = filter_input(INPUT_GET, 'categorias-filtro');
 
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
+    $resultado = $produto->getProdutosById($id);
+    $dado = $resultado->fetch_array();
+    unlink("imagens/produtos/".$dado['photoproduct']);
     $produto->deleteProdutos($id);
     unset($_GET['delete']);
     echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close close-get' data-dismiss='alert'>&times</a>Produto excluido com sucesso!</div>";
