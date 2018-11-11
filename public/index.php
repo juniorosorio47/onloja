@@ -1,7 +1,6 @@
 <?php
-require_once('../resources/config.php');
-require_once(CARAIO."views/header-cliente.php");
-
+require_once '../vendor/autoload.php';
+include '../app/views/partials-cliente/header-cliente.php';
 ?>
 
 <style>
