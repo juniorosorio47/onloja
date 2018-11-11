@@ -1,6 +1,5 @@
 <?php
-include_once('views/partials/header-admin.php');
-include_once('config.php');
+require_once('../resources/config.php');
 
 $total = 0;
 $categoria = 0;

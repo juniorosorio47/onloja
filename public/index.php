@@ -1,6 +1,7 @@
 <?php
-require_once('../views/partials/header-cliente.php');
-require_once('../class/Produto.php');
+require_once('../resources/config.php');
+require_once(CARAIO."views/header-cliente.php");
+
 ?>
 
 <style>
@@ -9,7 +10,6 @@ require_once('../class/Produto.php');
         grid-row: 1/2;
         height:300px;
         background:blue;
-
     }
     #carousel img{
         width:100%;
