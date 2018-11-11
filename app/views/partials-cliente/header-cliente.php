@@ -1,6 +1,7 @@
 <?php 
 require_once '../vendor/autoload.php';
-
+require_once '..\src\Code\Onloja\class\Categoria.php';
+require_once '..\src\Code\Onloja\class\Produto.php';
 
 ?>
 

@@ -1,5 +1,4 @@
 <?php
-include_once('Sql.php');
 $mysqli = new mysqli("localhost", "root", "", "onloja");
 class Produto{
 

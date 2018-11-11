@@ -1,6 +1,7 @@
 <?php
 require_once '../vendor/autoload.php';
-include '../app/views/partials-cliente/header-cliente.php';
+require_once '../app/views/partials-cliente/header-cliente.php';
+
 ?>
 
 <style>
@@ -52,5 +53,5 @@ include '../app/views/partials-cliente/header-cliente.php';
     
 
 <?php
-require_once('../views/partials/footer-cliente.php');
+require_once '../app/views/partials-cliente/footer-cliente.php';
 ?>
