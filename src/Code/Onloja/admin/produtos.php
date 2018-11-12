@@ -1,6 +1,5 @@
 <?php
-include_once('views/partials/header-admin.php');
-include_once('config.php');
+require_once '../../../../app/views/partials-admin/header-admin.php';
 
 $produto = new Produto();
 $categoria = 0;
@@ -13,7 +12,7 @@ if(isset($_GET['delete'])){
     $id = $_GET['delete'];
     $resultado = $produto->getProdutosById($id);
     $dado = $resultado->fetch_array();
-    unlink("imagens/produtos/".$dado['photoproduct']);
+    unlink("../../../../public/imagens/produtos/".$dado['photoproduct']);
     $produto->deleteProdutos($id);
     unset($_GET['delete']);
     echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close close-get' data-dismiss='alert'>&times</a>Produto excluido com sucesso!</div>";
@@ -22,7 +21,7 @@ if(isset($_GET['delete'])){
 if(isset($_FILES['foto'])){
     $extensao = strtolower(substr($_FILES['foto']['name'], -4));
     $novoNome = md5(time()).$extensao;
-    $pastaUp = "imagens/produtos/";
+    $pastaUp = "../../../../public/imagens/produtos/";
 
     move_uploaded_file($_FILES['foto']['tmp_name'], $pastaUp.$novoNome);
     
@@ -222,7 +221,7 @@ if(isset($_POST['salvar'])){
                 <td><?php echo "R$ ".$dado['priceproduct']?></td>
                 <td><?php echo $dado['qtdproduct']?></td>
                 <td><?php echo date("d/m/Y H:i:s", strtotime($dado['registerdateproduct']))?></td>
-                <td><img style="max-width:100px;" src="imagens/produtos/<?php echo $dado['photoproduct']?>" alt="Imagem não cadastrada  "></td>
+                <td><img style="max-width:100px;" src="../../../../public/imagens/produtos/<?php echo $dado['photoproduct']?>" alt="Imagem não cadastrada  "></td>
                 <td><a href="editarProdutos.php?edit=<?php echo $dado['idproduct']?>" class="icon" id="edit"><i class="fa fa-edit text-info"></i></a> <a href="produtos.php?delete=<?php echo $dado['idproduct']?>" class="icon" id="delete" method="GET" action="produtos.php"><i class="fa fa-trash text-danger"></i></a></td>
             </tr>
                 <?php }?>
@@ -261,9 +260,6 @@ if(isset($_POST['salvar'])){
             $('.alert-success').fadeOut("fast");
             $('.alert-danger').fadeOut("fast");
         });
-        
-
-
     });
 </script>
 
@@ -271,5 +267,5 @@ if(isset($_POST['salvar'])){
 
 
 <?php
-include_once('views/partials/footer-admin.php');
+require_once '../../../../app/views/partials-admin/footer-admin.php';
 ?>

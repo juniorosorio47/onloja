@@ -101,6 +101,12 @@ class Usuario{
         //Retornar os ids das compras realizadas pelo cliente e depois buscar no banco e mostrar as vendas
     }
 
+    public function getUsuarioById($id){
+        global $mysqli;
+        $resultado = $mysqli->query("SELECT * FROM tb_users WHERE iduser = '$id';");
+        return $resultado;
+    }
+
 
 }
 

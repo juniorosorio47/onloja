@@ -1,4 +1,5 @@
 <?php
+
  $mysqli = new mysqli('localhost','root','','onloja');
 //Criar as categorias antes dos produtos
 class Categoria{
@@ -38,8 +39,8 @@ class Categoria{
     }
 
     public function getCategorias(){
-        global $mysqli;
-        $busca = "SELECT * FROM tbcat;";
+        $mysqli = new mysqli('localhost','root','','onloja');
+        $busca = "SELECT * FROM `tbcat`";
         $resultado = $mysqli->query($busca);
         return $resultado;
     }

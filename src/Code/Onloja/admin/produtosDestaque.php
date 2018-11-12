@@ -1,6 +1,5 @@
 <?php
-include_once('views/partials/header-admin.php');
-include_once('config.php');
+require_once '../../../../app/views/partials-admin/header-admin.php';
 
 $destaque = new Destaque();
 $id = '';
@@ -8,7 +7,7 @@ $id = '';
 if(isset($_FILES['foto'])){
     $extensao = strtolower(substr($_FILES['foto']['name'], -4));
     $novoNome = md5(time()).$extensao;
-    $pastaUp = "imagens/produtos/";
+    $pastaUp = "../../../../public/imagens/produtos/";
 
     move_uploaded_file($_FILES['foto']['tmp_name'], $pastaUp.$novoNome);
 }
@@ -29,7 +28,12 @@ if(isset($_POST['adicionar'])){
 if(isset($_GET['delete'])){
     $idProduto = $_GET['delete'];
 
-    $destaque->deleteDestaques($idProduto);
+    $resultado = $destaque->getDestaquesById($idProduto);
+    
+    $dado = $resultado->fetch_array();
+    unlink("../../../../public/imagens/produtos/".$dado['imagespotlight']);
+    $destaque->deleteDestaques($idProduto); 
+    echo "<div class='alert alert-warning alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Produto retirado dos destaques.</div>";
 }
 
 
@@ -46,6 +50,15 @@ if(isset($_GET['delete'])){
     }
     .btn{
         width:100%
+    }
+    .destaques{
+        display:grid;
+        grid-template-columns:1fr;
+        grid-template-rows:auto;
+
+    }
+    .corpo-admin{
+      
     }
     
 </style>
@@ -91,9 +104,9 @@ if(isset($_GET['delete'])){
         
     ?>
     <input type="text" name="id" id="id" hidden value="<?php echo $dado['idproduct']?>">
-    <div class="card border border-danger" style="max-width:600px;">
-        <div class="card-header" style="display: flex; justify-content: center; align-content: center; max-height: 310px;">
-            <img style="width:300px;" class="card-img-top" src="imagens/produtos/<?php echo $dado['imagespotlight']?>" alt="<?php echo $dado['nameproduct']?>">
+    <div class="card border border-danger" style="width:900px; ">
+        <div class="card-header" style="display: flex; justify-content: center; align-content: center;width:900px; height: 230px;">
+            <img style="max-width:860px; max-height: 215px;" class="card-img-top" src="../../../../public/imagens/produtos/<?php echo $dado['imagespotlight']?>" alt="<?php echo $dado['nameproduct']?>">
         </div>
         <div class="card-body">
             <h5 class="card-title"><?php echo $dado['nameproduct']?></h5>
@@ -106,12 +119,6 @@ if(isset($_GET['delete'])){
 </div>
 
 
-
-
-
-
-
-
 <?php
-include_once('views/partials/footer-admin.php');
+require_once '../../../../app/views/partials-admin/footer-admin.php';
 ?>

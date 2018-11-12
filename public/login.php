@@ -1,8 +1,6 @@
 <?php
-require_once('../views/partials/header-cliente.php');
-require_once('../config.php');
-require_once('../class/Usuario.php');
-
+require_once '../app/views/partials-cliente/header-cliente.php';
+$_SESSION['msg'] = "";
 if(isset($_POST['cadastro'])){
     $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
     $cpf = trim(filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_STRING));
@@ -13,10 +11,10 @@ if(isset($_POST['cadastro'])){
 
     
     if(empty($nome) || empty($cpf) || empty($dataNasc) || empty($sex) || empty($email || empty($senha))){
-        echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome, CPF, Data de Nascimento, Sexo, E-mail e Senha.</div>";
+        $msg = "<div class='alert alert-danger alert-dismissible fade show'><a class='close' data-dismiss='alert'>&times</a>Por favor preencha os campos: Nome, CPF, Data de Nascimento, Sexo, E-mail e Senha.</div>";
     }else{
             setUsuario($nome, $cpf, $dataNasc, $sex, $email, $senha);
-            echo "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Usuario cadastrado com sucesso!</div>";
+            $msg = "<div class='alert alert-success'><a class='close' data-dismiss='alert'>&times</a>Usuario cadastrado com sucesso!</div>";
             $nome = $cpf = $dataNasc = $sex = $email = $senha = '';
         }
     }
@@ -29,7 +27,7 @@ if(isset($_POST['cadastro'])){
     .wrapper{
         display:flex;
         justify-content:center;
-        align-items: flex-start;
+        align-items: center;
         align-content: center;
         height:85%;
     }
@@ -37,6 +35,7 @@ if(isset($_POST['cadastro'])){
         width: 400px;
         height: auto;
         border-radius: 10px;
+        padding:2px;
     }
     #pesquisar-navbar{
         display:none;
@@ -56,63 +55,67 @@ if(isset($_POST['cadastro'])){
     #navbar-categorias{
         display:none;
     }
-    td{
-        display: flex;
-        justify-content:space-around;
-        align-items: center;
-        align-content: center;
-    }
+    
     .btn{
         width: 100%;
     }
-    #acancel{
-        width:100%;
-        height:100%;
-    }
+    .card{}
     .card-body{
-        padding:0;
+        padding:10px;
+        padding-top:0;
     }
     .btn-primary{
         margin-bottom:10px;
     }
+
+    input{
+        max-height: 60px;
+        height:40px;
+
+    }
+    .top{
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        align-content: center;
+        height:80px;
+        margin-top:10px;
+    }
+    .forms{
+        width: 100%;
+        height:100%;
+        margin-top:10px;
+        margin-bottom:10px;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap:10px;
+
+    }
+    
+
    
 </style>
-<?php  
-        
-        loginUsuario();
-        ?>
 
-    <div class="login-user bg-light">
-    <form action="login.php" method="post">
-        
-        <div class="card">
-            <div class="card card-header"><h5>Login</h5></div>
-                <div class="card card-body">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td><label for="email"><h6>E-mail:</h6></label></td>
-                                <td><input name="email" type="email" class="form-control"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="senha"><h6>Senha:</h6></label></td>
-                                <td><input name="senha" type="password" class="form-control" ></td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
+    <div class="login-user">
+    <form action="../src/Code/Onloja/loginProcess.php" method="post">
+        <div class="card border shadow ">
+            <div class="card card-body">
+                <div class="top">
+                    <h4>Login</h4>
                 </div>
-                <div class="card card-footer">
-                    <button class="btn btn-primary" type="submit" name="entrar">Entrar</button>
-                    <button class="btn btn-danger btn-sm">Voltar</button>
+                <?php echo $_SESSION['msg'];?>
+                <div class="forms">
+                    <input name="email" type="email" class="form-control " placeholder="E-mail:">
+                    <input name="senha" type="password" class="form-control" placeholder="Senha:">
                 </div>
+                <button class="btn btn-primary btn-lg " type="submit">Entrar</button>
+                <a href="index.php"><button class="btn btn-danger btn-sm" type="button">Voltar</button></a>
+            </div>   
         </div>
     </form>
 </div>
 
-
-
-
 <?php
-require_once('../views/partials/footer-cliente.php');
+require_once '../app/views/partials-cliente/footer-cliente.php';
 ?>

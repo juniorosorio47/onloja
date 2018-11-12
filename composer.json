@@ -1,8 +1,0 @@
-{
-    "name" : "OnLoja",
-    "autoload" : {
-        "psr-4" : {
-            "Code\\Onloja\\":"src/Code/Onloja/"
-        }
-    }
-}

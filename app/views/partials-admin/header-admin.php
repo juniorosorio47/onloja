@@ -1,5 +1,10 @@
-<?php require_once '../vendor/autoload.php';
-
+<?php 
+session_start();
+require_once "verificaLoginAdm.php";
+require_once "../class/Categoria.php";
+require_once "../class/Produto.php";
+require_once "../class/Destaque.php";
+require_once "../class/Usuario.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -7,11 +12,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="views\partials\jquery\jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="<?php echo DIRPAGE.'views/css/bootstrap/bootstrap.css'?>">
-    <link rel="stylesheet" href="<?php echo DIRPAGE.'views/partials/css/layout.css'?>">
+    <script src="/loja/app/views/jquery/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/loja/app/views/css/layout.css">
+    <link rel="stylesheet" href="/loja/app/views/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <title>OnLoja - <?php $title = "Administrador"; echo $title;?></title>
+    <script src="/loja/app/views/partials/js/bootstrap/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -26,7 +31,7 @@
             <div class="ir-loja">
                 <a href="http://localhost/loja/public/index.php"><i class="fa fa-share-square"></i>Ir para OnLoja</a> 
             </div>
-            <button class="btn"><i class="fa fa-sign-out-alt"></i>  Sair</button>
+            <a href="../../../../src/Code/Onloja/logout.php"><button class="btn"><i class="fa fa-sign-out-alt"></i>  Sair</button></a>
         </div>
     </nav>
 </header>
@@ -38,15 +43,15 @@
             <!--Leva à pagina das informações do adm-->
             <li style="font-weight: bold; background: #2e3131"><a href="#"><img id="user-image" src="views/partials/imagens/Sem título-1.jpg" alt="#"> Fulaninho da Silva</a></li>
             <!--Dashboard-->
-            <li id="home-admin"><a href="index.php"><i class="fa fa-home"></i>Home</a></li>
+            <li id="home-admin"><a href="home.php"><i class="fa fa-home"></i>Home</a></li>
             <!--Listagem de produtos e editar produtos-->
             <li id="produtos-admin"><a href="produtos.php"><i class="fa fa-box"></i> Produtos</a></li>
             <!--Categorias dos produtos-->
             <li id="categorias-admin"><a href="categorias.php"><i class="fa fa-list"></i> Categorias</a></li>
             <!--Relatórios das vendas-->
-            <li id="vendas-admin"><a href="#"><i class="fa fa-shopping-cart"></i> Vendas</a></li>
+            <li id="vendas-admin"><a href="vendas.php"><i class="fa fa-shopping-cart"></i> Vendas</a></li>
             <!--Listagem dos usuários-->
-            <li id="usuarios-admin"><a href="#"><i class="fa fa-user"></i> Usuários</a></li>
+            <li id="usuarios-admin"><a href="usuarios.php"><i class="fa fa-user"></i> Usuários</a></li>
             <!--Produtos em destaque-->
             <li id="destaque-admin"><a href="produtosDestaque.php"><i class="fa fa-star"></i> Produtos destaque</a></li>
         </ul>

@@ -1,6 +1,5 @@
 <?php
-include_once('views/partials/header-admin.php');
-include_once('config.php');
+require_once '../../../../app/views/partials-admin/header-admin.php';
 
 $cat = new Categoria();
 $nome = $descricao = '';
@@ -73,5 +72,5 @@ if(isset($_GET['edit'])){
 </form>
 
 <?php
-include_once('views/partials/footer-admin.php');
+require_once '../../../../app/views/partials-admin/footer-admin.php';
 ?>

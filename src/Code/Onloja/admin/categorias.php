@@ -1,5 +1,5 @@
 <?php
-require_once('../resources/config.php');
+require_once '../../../../app/views/partials-admin/header-admin.php';
 
 $total = 0;
 $categoria = 0;
@@ -171,5 +171,5 @@ if(isset($_POST['salvar'])){
 
 
 <?php
-include_once('views/partials/footer-admin.php');
+require_once '../../../../app/views/partials-admin/footer-admin.php';
 ?>

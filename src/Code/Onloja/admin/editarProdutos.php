@@ -1,6 +1,5 @@
 <?php
-include_once('views/partials/header-admin.php');
-include_once('config.php');
+require_once '../../../../app/views/partials-admin/header-admin.php';
 
 $produto = new Produto();
 $categoria = 0;
@@ -21,11 +20,8 @@ if(isset($_GET['edit'])){
     $preco = $resultado['priceproduct'];
     $categoria = $resultado['catproduct'];
     $quantidade = $resultado['qtdproduct'];
+    $imagem = $resultado['photoproduct'];
 }
-
-
-
-
 ?>
 <style>
     #produtos-admin{
@@ -114,7 +110,7 @@ if(isset($_GET['edit'])){
             </tr>
             <tr>
                 <td><label for="foto">Imagem do produto</label></td> 
-                <td><input name="foto" type="file" class="form-control" placeholder="Ex: R$2800,00"></td>   
+                <td><input name="foto" type="file" class="form-control" placeholder="Ex: R$2800,00" value="<?php echo htmlspecialchars($imagem);?>"></td>   
             </tr>
             <tr>
                 <td></td>
@@ -126,5 +122,5 @@ if(isset($_GET['edit'])){
 </form>
 
 <?php
-include_once('views/partials/footer-admin.php');
+require_once '../../../../app/views/partials-admin/footer-admin.php';
 ?>

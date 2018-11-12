@@ -23,6 +23,16 @@ class Destaque{
         return $resultado;
     }
 
+    public function getDestaquesById($id){
+        global $mysqli;
+
+        $busca = "SELECT * FROM tbspotlight";
+
+        $resultado = $mysqli->query($busca);
+
+        return $resultado;
+    }
+
     public function deleteDestaques($id){
         global $mysqli;
 
@@ -30,6 +40,7 @@ class Destaque{
 
         $mysqli->query($delete);
     }
+
 
 }
 

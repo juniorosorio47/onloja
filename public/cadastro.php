@@ -1,7 +1,5 @@
 <?php
-require_once('../views/partials/header-cliente.php');
-require_once('../config.php');
-require_once('../class/Usuario.php');
+require_once '../app/views/partials-cliente/header-cliente.php';
 
 ?>
 <style>
@@ -101,5 +99,5 @@ require_once('../class/Usuario.php');
 
 
 <?php
-require_once('../views/partials/footer-cliente.php');
+require_once '../app/views/partials-cliente/footer-cliente.php';
 ?>

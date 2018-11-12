@@ -1,7 +1,8 @@
 <?php 
-require_once '../vendor/autoload.php';
-require_once '..\src\Code\Onloja\class\Categoria.php';
-require_once '..\src\Code\Onloja\class\Produto.php';
+session_start();
+require_once '../src/Code/Onloja/class/Categoria.php';
+require_once '../src/Code/Onloja/class/Produto.php';
+require_once '../src/Code/Onloja/class/Usuario.php';
 
 ?>
 
@@ -22,15 +23,20 @@ require_once '..\src\Code\Onloja\class\Produto.php';
 <header class="navbars">
     <nav class="navbar navbar-dark navbar-principal">
         <div id="logo-navbar">
-            <a class="navbar-brand" href="index.php"><h2>OnLoja</h2></a>
+            <a class="navbar-brand" href="index.php"><h2 style="text-shadow: 2px 2px #97020b;"><strong>OnLoja</strong></h2></a>
         </div>
-        <div id="pesquisar-navbar">
-            <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-        </div>
-        <div id="user-navbar">
-            <?php if(isset($_SESSION['usuario'])){
-                echo "><a href='perfil.php'><i class='fa fa-user-circle'></i><p>Meu Perfil</p></a> <a href='carrinho.php'><i class='fa fa-shopping-cart'></i><p>Carrinho</p></a>";
+
+        <div class="input-group mb-3 shadow-sm " id="pesquisar-navbar">
+            <input type="text" class="form-control" placeholder="Procure produtos na loja" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <div class="input-group-append" style="margin:0; padding:0; heigth:100%">
+                <button class="btn bg-light" style="width: 100px" type="button" id="button-addon2"><i class="fa fa-search"></i></button>
+            </div>
+        </div>    
+        <?php if(isset($_SESSION['email'])){
+                echo "<div id='user-navbar' style='grid-template-columns: 1fr 1fr 1fr;'>";    
+                echo "<a href='carrinho.php'><i class='fa fa-shopping-cart'></i><p>Carrinho</p></a> <a href='perfil.php'><i class='fa fa-user-circle'></i><p>Perfil</p></a> <a href='../src/Code/Onloja/logout.php'><i class='fa fa-sign-out-alt'></i><p>Sair</p></a>";
             }else{
+                echo "<div id='user-navbar' style='grid-template-columns: 1fr 1fr;'>"; 
                 echo "<a href='cadastro.php'><i class='fa fa-pen'></i><p>Cadastrar</p></a><a href='login.php'><i class='fa fa-sign-in-alt'></i><p>Login</p></a>";
             }
             ?>
@@ -53,3 +59,4 @@ require_once '..\src\Code\Onloja\class\Produto.php';
 </header>
 
 <div class="wrapper">
+  

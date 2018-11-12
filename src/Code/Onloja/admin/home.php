@@ -1,6 +1,5 @@
 <?php
-include_once('views/partials/header-admin.php');
-include_once('config.php');
+require_once '../../../../app/views/partials-admin/header-admin.php';
 ?>
 <style>
     #home-admin{
@@ -10,7 +9,7 @@ include_once('config.php');
 
 
 
-
+ 
 <?php
-include_once('views/partials/footer-admin.php')
+require_once '../../../../app/views/partials-admin/footer-admin.php';
 ?>
