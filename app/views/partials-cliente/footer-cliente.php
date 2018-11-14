@@ -15,6 +15,13 @@
 
 </footer>
 
-<script src="jquery/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.close').click(function(event){
+            event.preventDefault();
+            $('.alert').fadeOut("fast");
+        });
+    });
+</script>
 </body>
 </html>

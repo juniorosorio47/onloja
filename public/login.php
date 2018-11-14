@@ -1,6 +1,6 @@
 <?php
 require_once '../app/views/partials-cliente/header-cliente.php';
-$_SESSION['msg'] = "";
+$msg = "";
 if(isset($_POST['cadastro'])){
     $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
     $cpf = trim(filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_STRING));
@@ -104,7 +104,7 @@ if(isset($_POST['cadastro'])){
                 <div class="top">
                     <h4>Login</h4>
                 </div>
-                <?php echo $_SESSION['msg'];?>
+                <?php if(isset($_SESSION['msg'])){print_r($_SESSION['msg']); unset($_SESSION['msg']);}?>
                 <div class="forms">
                     <input name="email" type="email" class="form-control " placeholder="E-mail:">
                     <input name="senha" type="password" class="form-control" placeholder="Senha:">

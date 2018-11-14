@@ -42,7 +42,7 @@ class Produto{
         return $results = $mysqli->query($busca);
     }
 
-    public function deleteProdutos($idProduto){
+    public function deleteProductsById($idProduto){ 
         global $mysqli;
         $delete = "DELETE FROM tbproducts WHERE idproduct ='$idProduto'";
         $mysqli->query($delete);

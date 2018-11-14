@@ -13,7 +13,7 @@ if(isset($_GET['delete'])){
     $resultado = $produto->getProdutosById($id);
     $dado = $resultado->fetch_array();
     unlink("../../../../public/imagens/produtos/".$dado['photoproduct']);
-    $produto->deleteProdutos($id);
+    $produto->deleteProductsById($id);
     unset($_GET['delete']);
     echo "<div class='alert alert-danger alert-dismissible fade show'><a class='close close-get' data-dismiss='alert'>&times</a>Produto excluido com sucesso!</div>";
 }
@@ -25,7 +25,7 @@ if(isset($_FILES['foto'])){
 
     move_uploaded_file($_FILES['foto']['tmp_name'], $pastaUp.$novoNome);
     
-}else{$_FILES['foto'] = '';}
+}else{$_FILES['foto'] = '';}    
 
 if(isset($_POST['cadastrar'])){
     $ativo = trim(filter_input(INPUT_POST, 'ativo', FILTER_SANITIZE_STRING));
@@ -74,6 +74,7 @@ if(isset($_POST['salvar'])){
         }
     }
 }
+
 
 
 ?>
@@ -172,17 +173,18 @@ if(isset($_POST['salvar'])){
 
 <div class="topo-lista">
     <button id="abrir-cadastro" class="btn btn-info"><i class="fa fa-plus"></i> Adicionar Produto</button>
-    <div id="div-categorias">
-        <select name="categorias-filtro" id="categorias-filtro" class="form-control" value="<?php echo htmlspecialchars($filtro);?>">
+    <form action="produtos.php" id="div-categorias">
+        <select name="categorias-filtro" id="categorias-filtro" class="form-control" value="<?php echo htmlspecialchars($_GET['categorias-filtro']);?>">
             <option value="0">Todas as categorias</option>
             <?php 
+            
             $optionCat = $cat->getCategorias();
             while($dado = $optionCat->fetch_array()){
             ?>
             <option value="<?php echo $dado['idcat']?>"><?php echo $dado['namecat'];}?></option>
         </select>
-        <a href="produtos.php"><button class="btn btn-primary" >Filtrar</button></a>
-    </div>
+        <a href="produtos.php?cat=<?php echo $categoria['idcat']?>" method="get"><button class="btn btn-primary">Filtrar</button></a>
+    </form>
 </div>
 
 <h4 id="add-prod">Todos os Produtos:</h4>
@@ -203,15 +205,19 @@ if(isset($_POST['salvar'])){
             <tr>
             <?php
             $total = 0;
-            $resultado = $produto->getProdutos();
-
-            if(isset($filtro)){
-                $resultado = $produto->getProdutosCategoria($filtro);
+            $categoria = $cat->getCategorias()->fetch_array();
+            if(isset($_GET['categorias-filtro'])){
+                $id = $_GET['categorias-filtro'];
+                $resultado = $produto->getProdutosCategoria($id);
+                $total = mysqli_num_rows($resultado);
+            }else{
+                $resultado = $produto->getProdutos();
+                $total = mysqli_num_rows($resultado);
             }
             
-        
+            
+
             while($dado = $resultado->fetch_array()){
-                $total++;
             ?>
                 <td><?php if($dado['activeproduct']){ echo "Venda";}else{ echo "Estoque";}?></td>
                 <td><?php echo $dado['nameproduct']?></td>
@@ -226,7 +232,7 @@ if(isset($_POST['salvar'])){
             </tr>
                 <?php }?>
     </tbody>
-    <caption><?php if($total > 1){ echo "Encontrados ".$total." produtos.";} elseif($total = 1){ echo "Encontrado ".$total." produto.";}?></caption>
+    <caption><?php if($total > 1){ echo "Encontrados ".$total." produtos.";} elseif($total == 1){ echo "Encontrado ".$total." produto.";} else{echo "Sem registros na tabela.";}?></caption>
 </table>
 
 <!--Scripts  de manipulação do DOM-->

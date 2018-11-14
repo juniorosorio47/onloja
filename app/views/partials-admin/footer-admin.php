@@ -7,7 +7,10 @@
 <script>
     $(document).ready(function(){
         $('.close').click(function(event){
+            event.preventDefault();
             $('.alert').fadeOut("fast");
+            $('.info-user').hide('slow');
+            
         });
     });
 </script>

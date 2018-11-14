@@ -3,7 +3,7 @@ session_start();
 $mysqli = new mysqli('localhost', 'root', '', 'onloja');
 
 if (empty($_POST['email']) || empty($_POST['senha'])){
-    header('Location: ../../../public/login.php');
+    header('Location: ../../../../public/login.php');
     exit();
 }
 
@@ -31,7 +31,8 @@ if($row==1){
         }
     }
 }else{
-    header('Location: ../public/login.php');
+    $_SESSION['msg'] = "E-mail ou senha incorretos.";
+    header('Location: ../../../public/login.php');
     exit();
 }
 ?>

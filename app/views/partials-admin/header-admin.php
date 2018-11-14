@@ -5,6 +5,7 @@ require_once "../class/Categoria.php";
 require_once "../class/Produto.php";
 require_once "../class/Destaque.php";
 require_once "../class/Usuario.php";
+require_once "../class/Venda.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,11 +13,12 @@ require_once "../class/Usuario.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="/loja/app/views/jquery/jquery-3.3.1.min.js"></script>
+    
     <link rel="stylesheet" href="/loja/app/views/css/layout.css">
     <link rel="stylesheet" href="/loja/app/views/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script src="/loja/app/views/partials/js/bootstrap/bootstrap.min.js"></script>
+    <script src="/loja/app/views/jquery/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 

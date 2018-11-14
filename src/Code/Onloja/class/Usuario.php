@@ -101,12 +101,27 @@ class Usuario{
         //Retornar os ids das compras realizadas pelo cliente e depois buscar no banco e mostrar as vendas
     }
 
-    public function getUsuarioById($id){
+    public function getUserById($id){
         global $mysqli;
         $resultado = $mysqli->query("SELECT * FROM tb_users WHERE iduser = '$id';");
         return $resultado;
     }
 
+    public function getFiltroAtivo($id){
+        global $mysqli;
+        $resultado = $mysqli->query("SELECT * FROM tb_users WHERE iduser = '$id' AND activeuser = 1;");
+        return $resultado;
+    }
+
+    public function editUsuario($id, $nome, $cpf, $dataNasc, $sexo, $email, $adm, $ativo){
+        global $mysqli;
+        $mysqli->query("UPDATE tb_users SET nameuser = '$nome', cpfuser = '$cpf', datenasc = '$dataNasc', sexuser = '$sexo', emailuser = '$email', inadm = '$adm', activeuser = '$ativo' WHERE iduser = '$id'");
+    }
+
+    public function desativeUserById($id){
+        global $mysqli;
+        $mysqli->query("UPDATE tb_users SET activeuser='0' WHERE iduser = '$id';");
+    }
 
 }
 
