@@ -113,6 +113,13 @@ class Usuario{
         return $resultado;
     }
 
+    public function searchUsers($pesquisa){
+        global $mysqli;
+        $busca = "SELECT * FROM tb_users WHERE nameuser LIKE '%$pesquisa%' OR emailuser LIKE '%$pesquisa%';";
+        $resultado = $mysqli->query($busca);
+        return $resultado;
+    }
+
     public function editUsuario($id, $nome, $cpf, $dataNasc, $sexo, $email, $adm, $ativo){
         global $mysqli;
         $mysqli->query("UPDATE tb_users SET nameuser = '$nome', cpfuser = '$cpf', datenasc = '$dataNasc', sexuser = '$sexo', emailuser = '$email', inadm = '$adm', activeuser = '$ativo' WHERE iduser = '$id'");

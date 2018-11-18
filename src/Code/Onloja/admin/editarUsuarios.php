@@ -8,7 +8,7 @@ $nome = $cpf = $dataNasc = $sexo = $email = $adm = $ativo = '';
 if(isset($_GET['edit'])){
     $idEdit = $_GET['edit'];
     
-    $obj = $user->getUsuarioById($idEdit);
+    $obj = $user->getUserById($idEdit);
 
     $resultado = $obj->fetch_array();
 

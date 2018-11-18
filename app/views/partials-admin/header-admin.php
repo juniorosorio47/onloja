@@ -26,7 +26,7 @@ require_once "../class/Venda.php";
     <nav class="navbar navbar-dark navbar-principal" style="height:60px;">
         <div class="botao-menu"><button class="btn"><i class="fa fa-bars"></i></button></div>
         <div id="logo-navbar">
-            <a class="navbar-brand" href="#">OnLoja</a>
+            <a class="navbar-brand" href="home.php">OnLoja</a>
         </div>
         <div class="pesquisar-admin" style=" display:flex;">
             <!--Vai para a loja-->

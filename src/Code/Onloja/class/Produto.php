@@ -28,6 +28,7 @@ class Produto{
         return $results = $mysqli->query($busca);
     }
 
+
     public function getProdutosById($id){
         global $mysqli;
         $busca = "SELECT * FROM tbproducts JOIN tbcat ON tbproducts.catproduct = tbcat.idcat WHERE tbproducts.idproduct = '$id'";
@@ -42,6 +43,13 @@ class Produto{
         return $results = $mysqli->query($busca);
     }
 
+    public function getProdutosCategoriaLimit4($filtro){
+        global $mysqli;
+        $busca = "SELECT * FROM tbproducts JOIN tbcat ON tbproducts.catproduct = tbcat.idcat WHERE idcat = '$filtro' LIMIT 4;";
+
+        return $results = $mysqli->query($busca);
+    }
+
     public function deleteProductsById($idProduto){ 
         global $mysqli;
         $delete = "DELETE FROM tbproducts WHERE idproduct ='$idProduto'";
@@ -52,6 +60,13 @@ class Produto{
         global $mysqli;
         $update = "UPDATE tbproducts SET activeproduct = '$ativo', nameproduct = '$nome', brandproduct = '$marca', descproduct = '$descricao', catproduct = '$categoria', priceproduct = '$preco', photoproduct = '$nomeFoto', qtdproduct = '$quantidade' WHERE idproduct = '$id'";
         $mysqli->query($update);
+    }
+
+    public function searchProducts($pesquisa){
+        global $mysqli;
+        $busca = "SELECT * FROM tbproducts WHERE nameproduct LIKE '%$pesquisa%' OR descproduct LIKE '%$pesquisa%';";
+        $resultado = $mysqli->query($busca);
+        return $resultado;
     }
 
 }

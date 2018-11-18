@@ -85,7 +85,7 @@ if(isset($_GET['delete'])){
                 </td>
             </tr>
             <tr>
-                <td><label for="descricao">Imagem (600x2400 pixels):</label></td>
+                <td><label for="descricao">Imagem (350x1650 pixels):</label></td>
                 <td><input name="foto" type="file" class="form-control"></td>
             </tr>
             <tr>

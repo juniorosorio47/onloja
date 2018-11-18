@@ -41,6 +41,21 @@ class Destaque{
         $mysqli->query($delete);
     }
 
+    public function getDestaques(){
+        global $mysqli;
+        $select = "SELECT * FROM tbspotlight;";
+        $result = $mysqli->query($select);
+        while($row = $result->fetch_array()){
+        $slides = <<<DELIMETER
+        <div class="carousel-item">
+            <img src="/loja/public/imagens/produtos/{$row['imagespotlight']}" class="img-fluid">
+        </div>
+DELIMETER;
+        }
+
+        echo $slides;
+    }
+
 
 }
 

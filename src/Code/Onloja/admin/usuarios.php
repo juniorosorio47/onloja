@@ -2,15 +2,14 @@
 require_once '../../../../app/views/partials-admin/header-admin.php';
 
 $consulta = "SELECT * FROM tb_users";
---------------------------------------------Parei aqui
-if(isset($_GET['pesquisar-usuarios'])){
-    getFiltroAtivo();
-}
--------------------------------------------
+$user = new Usuario();
+
+
 $conn = $mysqli->query($consulta) or die($mysqli->error);
 $info = '';
 $compras = '';
-$user = new Usuario();
+$pesquisa = '';
+$msg = '';
 
 if(isset($_GET['info'])){
     $id = $_GET['info'];
@@ -154,12 +153,24 @@ if(isset($_GET['delete'])){
     </div>
 </div>
 
-<form action="usuarios.php" name="pesquisar-usuarios" method="get" class="input-group mb-3 pesquisar-users">
-    <input type="text" class="form-control" placeholder="Pesquisar usuários" aria-describedby="button-addon2">
+<form action="usuarios.php" method="post" class="input-group mb-3 pesquisar-users">
+    <input type="text" class="form-control" placeholder="Pesquisar usuários" aria-describedby="button-addon2" name="pesquisar-usuarios">
     <div class="input-group-append">
-        <button class="btn btn-outline-secondary search" type="button" id="button-addon2"><i class="fa fa-search"></i></button>
+        <button class="btn btn-outline-secondary search" type="submit" id="button-addon2"><i class="fa fa-search"></i></button>
     </div>
 </form>
+
+<?php 
+if(isset($_POST['pesquisar-usuarios'])){
+    $pesquisa = $_POST['pesquisar-usuarios'];
+    $conn = $user->searchUsers($pesquisa);
+    if(mysqli_num_rows($conn)==0){
+        $msg = "Não foram encontrados resultados.";
+        
+    }
+    unset($_POST['pesquisar-usuarios']);
+}
+?>
 
     
 <div class="lista-usuarios">
@@ -174,7 +185,8 @@ if(isset($_GET['delete'])){
         </thead>
         
         <tbody>
-        <?php while($dado = $conn->fetch_array()){?>
+
+        <?php if($conn != ''){while($dado = $conn->fetch_array()){?>
             <tr>
                 <td><?php echo $dado['nameuser']?></td>
                 
@@ -187,8 +199,9 @@ if(isset($_GET['delete'])){
                     <a href="usuarios.php?delete=<?php echo $dado['iduser'];?>" id="delete"><i class="fa fa-trash-alt text-danger"></i></a>
                 </td>
             </tr>
-        <?php };?>
+        <?php }};?>
         </tbody>
+        <?php if($msg != ''){ echo "<tr><td>$msg</td></tr>";}?>
     </table>
 </div>
 
