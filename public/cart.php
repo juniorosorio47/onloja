@@ -16,14 +16,17 @@ require_once '../app/views/partials-cliente/header-cliente.php';
 
         $_SESSION['product_'.$_GET['adicionar']] += 1;
         header('Location: carrinho.php');
-        $_SESSION['msg'] = '<div class="alert alert-success">Produto adicionado com sucesso.</div>';
+        $_SESSION['msg'] = '<div class="alert alert-success">Produto adicionado ao carrinho.</div>';
+        unset($_GET['adicionar']);
 
     }else{
 
         $_SESSION['msg'] = '<div class="alert alert-danger">Só existe '.$qtdProd.' disponíveis</div>';
+        unset($_GET['adicionar']);
         header('Location: carrinho.php');
         
     }
+
     //$_SESSION['product_'] . $_GET['adicionar'] =+1;
 
     //header('Location: carrinho.php');
@@ -31,18 +34,25 @@ require_once '../app/views/partials-cliente/header-cliente.php';
 
  if(isset($_GET['remove'])){
     $_SESSION['product_'.$_GET['remove']] --;
+    unset($_GET['remove']);
+    $_SESSION['msg'] = '<div class="alert alert-danger">Removido um produto.</div>';
     header('Location: carrinho.php');
 
 
     if($_SESSION['product_'.$_GET['remove']] < 1){
+        unset($_GET['remove']);
         header('Location: carrinho.php');
     }else{
+        unset($_GET['remove']);
+        $_SESSION['msg'] = '<div class="alert alert-danger">Produto removido do carrinho.</div>';
         header('Location: carrinho.php');
     }
  }
 
  if(isset($_GET['delete'])){
     $_SESSION['product_'.$_GET['delete']] = '0';
+    unset($_GET['delete']);
+    $_SESSION['msg'] = '<div class="alert alert-danger">Produto removido do carrinho.</div>';
     header('Location: carrinho.php');
  }
 
@@ -50,6 +60,10 @@ require_once '../app/views/partials-cliente/header-cliente.php';
     global $mysqli;
     $total = 0;
     $prods = 0;
+    $item_name = 1;
+    $item_number = 1; 
+    $amount = 1;
+    $quantity = 1;
 
     foreach($_SESSION as $name => $value){
         if($value > 0){
@@ -72,15 +86,23 @@ require_once '../app/views/partials-cliente/header-cliente.php';
                         <td class="text-center align-middle">R$ {$row['priceproduct']},00</td>
                         <td class="text-center align-middle">R$ {$sub},00</td>
                         <td class="text-center align-middle">
-                            <a href="cart.php?adicionar={$row['idproduct']}"><button class="btn btn-primary"><i class="fa fa-plus"></i></button></a>
-                            <a href="cart.php?remove={$row['idproduct']}"><button class="btn btn-info"><i class="fa fa-minus"></i></button></a>
-                            <a href="cart.php?delete={$row['idproduct']}"><button class="btn btn-danger"><i class="fa fa-times"></i></button></a>
+                            <a href="cart.php?adicionar={$row['idproduct']}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+                            <a href="cart.php?remove={$row['idproduct']}" class="btn btn-info"> <i class="fa fa-minus"></i></a>
+                            <a href="cart.php?delete={$row['idproduct']}" class="btn btn-danger"> <i class="fa fa-times"></i></a>
                         </td>
                     </tr>
+                    <input type="hidden" name="item_name" value="{$row['nameproduct']}">
+                    <input type="hidden" name="item_number" value="{$row['idproduct']}">
+                    <input type="hidden" name="amount" value="{$row['priceproduct']}">
+                    <input type="hidden" name="quantity" value="{$value}">
 DELIMETER;
                 echo $rowCart;
                 $prods = $prods + $value;
                 $total = $total + $sub;
+                $item_name++;
+                $item_number++; 
+                $amount++;
+                $quantity++;
                 }
                
             }

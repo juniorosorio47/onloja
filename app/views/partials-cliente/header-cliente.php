@@ -38,8 +38,11 @@ require_once '../src/Code/Onloja/class/Destaque.php';
             </form>
         </div>    
         <?php if(isset($_SESSION['email'])){
-                echo "<div id='user-navbar' style='grid-template-columns: 1fr 1fr 1fr;'>";    
-                echo "<a id='link-carrinho' href='carrinho.php'><i class='fa fa-shopping-cart'></i><p>Carrinho</p></a> <a href='perfil.php'><i class='fa fa-user-circle'></i><p>Perfil</p></a> <a href='../src/Code/Onloja/logout.php'><i class='fa fa-sign-out-alt'></i><p>Sair</p></a>";
+                echo "<div id='user-navbar' style='grid-template-columns: 1fr 1fr 1fr;'>";  
+                if($_SESSION['inadm']==1){echo "<a id='link-admin' href='../src/Code/Onloja/admin/home.php'><i class='fa fa-info'></i><p>Admin</p></a>";}
+                echo "<a id='link-carrinho' href='carrinho.php'><i class='fa fa-shopping-cart'></i><p>Carrinho</p></a>"; 
+                if($_SESSION['inadm']==0){echo "<a href='perfil.php'><i class='fa fa-user-circle'></i><p>Perfil</p></a>";} 
+                echo "<a href='../src/Code/Onloja/logout.php'><i class='fa fa-sign-out-alt'></i><p>Sair</p></a>";
             }else{
                 echo "<div id='user-navbar' style='grid-template-columns: 1fr 1fr;'>"; 
                 echo "<a href='cadastro.php'><i class='fa fa-pen'></i><p>Cadastrar</p></a><a href='login.php'><i class='fa fa-sign-in-alt'></i><p>Login</p></a>";

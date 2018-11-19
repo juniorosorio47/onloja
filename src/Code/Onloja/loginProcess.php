@@ -25,6 +25,7 @@ if($row==1){
             header('Location: admin/home.php');
             exit();
         }else{
+            $_SESSION['inadm'] = 0;
             echo "usuario normal";
             header('Location: ../../../public/index.php');
             exit();

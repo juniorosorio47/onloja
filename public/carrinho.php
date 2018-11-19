@@ -1,5 +1,6 @@
 <?php 
 require_once '../app/views/partials-cliente/header-cliente.php';
+include '../src/Code/Onloja/verificaLogin.php';
 require_once 'cart.php';
 $msg = '';
 if(isset($_SESSION['msg'])){
@@ -34,10 +35,10 @@ if(isset($_SESSION['msg'])){
     }
     .resumo{
         padding:20px;
-        height:400px;
+        height:203px;
         width:100%;
         display: grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
         background: #F8F8F8;
     }
     .subtotal{
@@ -57,23 +58,43 @@ if(isset($_SESSION['msg'])){
 
 <header>
     <h2 id="titulo">Carrinho de compras:</h2>
+    <?php echo $msg; unset($_SESSION['msg']);?>
 </header>
 
 <div class="carrinho-corpo">
-    <table class="table table-lg table-hover table-responsive-xl shadow">
-        <thead>
-            <th class="text-center align-middle">Imagem</th>
-            <th class="text-center align-middle">Produto</th>
-            <th class="text-center align-middle">Quantidade</th>
-            <th class="text-center align-middle">Preço</th>
-            <th class="text-center align-middle">Subtotal</th>
-            <th class="text-center align-middle">Ações</th>
+    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="YA3X7GBR8U576">
+        <input type="hidden" name="lc" value="US">
+        <table class="table table-lg table-hover table-responsive-xl shadow">
+            <thead>
+                <th class="text-center align-middle">Imagem</th>
+                <th class="text-center align-middle">Produto</th>
+                <th class="text-center align-middle">Quantidade</th>
+                <th class="text-center align-middle">Preço</th>
+                <th class="text-center align-middle">Subtotal</th>
+                <th class="text-center align-middle">Ações</th>
 
-        </thead>
-        <tbody>
-           <?php listCart();?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <?php listCart();?>
+            </tbody>
+        </table>
+        <?php if(!empty($_SESSION['prods'])){
+            echo '
+                <input type="hidden" name="button_subtype" value="services">
+                <input type="hidden" name="no_note" value="1">
+                <input type="hidden" name="no_shipping" value="1">
+                <input type="hidden" name="rm" value="1">
+                <input type="hidden" name="return" value="http://localhost/loja/public/thank_you.php">
+                <input type="hidden" name="cancel_return" value="http://localhost/loja/public/carrinho.php">
+                <input type="hidden" name="currency_code" value="USD">
+                <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+                <input type="hidden" name="notify_url" value="http://localhost/loja/public/listener.php">
+                <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                ';
+        }?>
+    </form>
 
     <div class="resumo shadow border border-danger">
         <h4>Resumo do pedido</h4>
@@ -83,24 +104,11 @@ if(isset($_SESSION['msg'])){
         <div class="subtotal">
             <h5>Frete:</h5> <h5>Frete Grátis</h5>
         </div>
-        <div class="finalizar">
-            <button class="btn btn-danger btn-block"><h4>Finalizar compra</h4></button>
-        </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <?php
 require_once '../app/views/partials-cliente/footer-cliente.php';
 ?>
+
+

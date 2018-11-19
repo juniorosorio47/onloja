@@ -43,7 +43,7 @@ require_once "../class/Venda.php";
     <div class="side-menu">
         <ul> 
             <!--Leva à pagina das informações do adm-->
-            <li style="font-weight: bold; background: #2e3131"><a href="#"><img id="user-image" src="views/partials/imagens/Sem título-1.jpg" alt="#"> Fulaninho da Silva</a></li>
+            <li style="font-weight: bold; background: #2e3131"><a href="#"><img id="user-image" style="" src="/loja/public/imagens/users/tony_c455.jpg" alt="#"> Fulaninho da Silva</a></li>
             <!--Dashboard-->
             <li id="home-admin"><a href="home.php"><i class="fa fa-home"></i>Home</a></li>
             <!--Listagem de produtos e editar produtos-->

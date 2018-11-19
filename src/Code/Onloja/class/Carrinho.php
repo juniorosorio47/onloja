@@ -4,7 +4,6 @@ class Carrinho{
     public function listCart(){
         global $mysqli;
 
-        foreach()
 
         $query = "SELECT * FROM tbproducts";
         $result  = $mysqli->query($query);
